@@ -1,0 +1,96 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "NovaSheets",
+	"patterns": [
+		{
+			"include": "#keywords"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"match": "^\\s*(@var)\\s(.+)$",
+					"captures": {
+						"1": {
+							"name": "novasheets.variable.declarator"
+						},
+						"2": {
+							"name": "novasheets.variable.name"
+						}
+					}
+				},
+				{
+					"match": "(\\$\\()(.+?)(\\))",
+					"captures": {
+						"1": {
+							"name": "novasheets.variable.substution"
+						},
+						"2": {
+							"name": "novasheets.variable.name"
+						},
+						"3": {
+							"name": "novasheets.variable.substution"
+						}
+					}
+				},
+				{
+					"match": "\\s*---\\s*",
+					"name": "novasheets.seperator"
+				},
+				{
+					"match": "(\\s|^)//.+",
+					"name": "novasheets.comment"
+				},
+				{
+					"match": "/\\*.+\\*/",
+					"name": "css.comment"
+				},
+				{
+					"match": "(.+){",
+					"captures": {
+						"1": {
+							"name": "css.element"
+						}
+					}
+				},
+				{
+					"match": "([a-z-]+):",
+					"captures": {
+						"1": {
+							"name": "css.property.value"
+						}
+					}
+				},
+				{
+					"match": "\\\"(\\\\u|)(.+)?\\\"",
+					"captures": {
+						"1": {
+							"name": "css.escape"
+						},
+						"2": {
+							"name": "css.string"
+						}
+					}
+				},
+				{
+					"match": "([a-z-]+)\\s*\\(",
+					"captures": {
+						"1": {
+							"name": "css.function"
+						}
+					}
+				},
+				{
+					"match": "[0-9]+",
+					"name": "css.number"
+				},
+				{
+					"match": "#[0-9a-f]{8}|#[0-9a-f]{6}|#[0-9a-f]{3,4}",
+					"name": "css.color.hash"
+				}
+			]
+		}
+	},
+	"scopeName": "source.nss"
+}
