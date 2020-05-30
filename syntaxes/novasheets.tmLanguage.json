@@ -1,6 +1,7 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "NovaSheets",
+	"scopeName": "source.nss",
 	"patterns": [
 		{
 			"include": "#keywords"
@@ -13,10 +14,10 @@
 					"match": "^\\s*(@var)\\s(.+)$",
 					"captures": {
 						"1": {
-							"name": "novasheets.variable.declarator"
+							"name": "keyword.control.at-rule.media.css"
 						},
 						"2": {
-							"name": "novasheets.variable.name"
+							"name": "keyword.other.unit.css"
 						}
 					}
 				},
@@ -24,33 +25,33 @@
 					"match": "(\\$\\()(.+?)(\\))",
 					"captures": {
 						"1": {
-							"name": "novasheets.variable.substution"
+							"name": "entity.name.tag.wildcard.css"
 						},
 						"2": {
-							"name": "novasheets.variable.name"
+							"name": "keyword.other.unit.css"
 						},
 						"3": {
-							"name": "novasheets.variable.substution"
+							"name": "entity.name.tag.wildcard.css"
 						}
 					}
 				},
 				{
 					"match": "\\s*---\\s*",
-					"name": "novasheets.seperator"
+					"name": "header"
 				},
 				{
 					"match": "(\\s|^)//.+",
-					"name": "novasheets.comment"
+					"name": "comment.block.css"
 				},
 				{
 					"match": "/\\*.+\\*/",
-					"name": "css.comment"
+					"name": "comment.block.css"
 				},
 				{
 					"match": "(.+){",
 					"captures": {
 						"1": {
-							"name": "css.element"
+							"name": "entity.other.attribute-name.class.css"
 						}
 					}
 				},
@@ -58,18 +59,15 @@
 					"match": "([a-z-]+):",
 					"captures": {
 						"1": {
-							"name": "css.property.value"
+							"name": "support.type.property-name.css"
 						}
 					}
 				},
 				{
-					"match": "\\\"(\\\\u|)(.+)?\\\"",
+					"match": "\\\"(.+)?\\\"",
 					"captures": {
 						"1": {
-							"name": "css.escape"
-						},
-						"2": {
-							"name": "css.string"
+							"name": "string.quoted.double.css"
 						}
 					}
 				},
@@ -83,7 +81,7 @@
 				},
 				{
 					"match": "[0-9]+",
-					"name": "css.number"
+					"name": "constant.numeric.css"
 				},
 				{
 					"match": "#[0-9a-f]{8}|#[0-9a-f]{6}|#[0-9a-f]{3,4}",
@@ -91,6 +89,5 @@
 				}
 			]
 		}
-	},
-	"scopeName": "source.nss"
+	}
 }

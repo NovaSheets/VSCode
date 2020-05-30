@@ -34,18 +34,6 @@
                 "scopeName": "source.nss",
                 "path": "./syntaxes/novasheets.tmLanguage.json"
             }
-        ],
-        "themes": [
-            {
-                "label": "NovaSheets Dark Theme",
-                "uiTheme": "vs-dark",
-                "path": "./themes/novasheets-dark.json"
-            },
-            {
-                "label": "NovaSheets Light Theme",
-                "uiTheme": "vs",
-                "path": "./themes/novasheets-light.json"
-            }
         ]
     }
 }
