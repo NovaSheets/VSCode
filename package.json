@@ -1,10 +1,10 @@
 {
     "name": "novasheets",
     "displayName": "NovaSheets",
-    "description": "Syntax highligher theme for NovaSheet files",
+    "description": "Syntax highligher for NovaSheet files",
     "publisher": "Nixinova",
     "repository": "NovaSheets-vscode",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "engines": {
         "vscode": "^1.45.0"
     },
