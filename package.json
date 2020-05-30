@@ -1,7 +1,7 @@
 {
     "name": "novasheets",
     "displayName": "NovaSheets",
-    "description": "Syntax highligher for NovaSheet files",
+    "description": "Syntax highligher theme for NovaSheet files",
     "version": "1.0.0",
     "engines": {
         "vscode": "^1.45.0"
