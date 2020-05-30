@@ -35,9 +35,14 @@
         ],
         "themes": [
             {
-                "label": "NovaSheets Theme",
+                "label": "NovaSheets Dark Theme",
                 "uiTheme": "vs-dark",
                 "path": "./themes/novasheets-dark.json"
+            },
+            {
+                "label": "NovaSheets Light Theme",
+                "uiTheme": "vs",
+                "path": "./themes/novasheets-light.json"
             }
         ]
     }

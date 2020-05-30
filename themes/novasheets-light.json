@@ -1,0 +1,169 @@
+{
+	"name": "NovaSheets Theme",
+	"type": "dark",
+	"colors": {
+		"editor.background": "#e0e0e0",
+		"editor.foreground": "#000f0f",
+		"activityBarBadge.background": "#33adff",
+		"sideBarTitle.foreground": "#454545"
+	},
+	"tokenColors": [
+		{
+			"name": "Variable Declarator",
+			"scope": [
+				"novasheets.variable.declarator"
+			],
+			"settings": {
+				"foreground": "#460075"
+			}
+		},
+		{
+			"name": "Variable Substitution Characters",
+			"scope": [
+				"novasheets.variable.substution"
+			],
+			"settings": {
+				"foreground": "#000cb3"
+			}
+		},
+		{
+			"name": "Variable Names",
+			"scope": [
+				"novasheets.variable.name"
+			],
+			"settings": {
+				"fontStyle": "bold",
+				"foreground": "#750019"
+			}
+		},
+		{
+			"name": "Seperator",
+			"scope": [
+				"novasheets.seperator"
+			],
+			"settings": {
+				"foreground": "#483dc4"
+			}
+		},
+		{
+			"name": "Punctuation",
+			"scope": [
+				"punctuation"
+			],
+			"settings": {
+				"foreground": "#272725"
+			}
+		},
+		{
+			"name": "Invalid Content",
+			"scope": [
+				"invalid"
+			],
+			"settings": {
+				"foreground": "#ad0000"
+			}
+		},
+		{
+			"name": "Elements",
+			"scope": [
+				"css.element"
+			],
+			"settings": {
+				"foreground": "#8c5e08"
+			}
+		},
+		{
+			"name": "Property Names",
+			"scope": [
+				"css.property.name"
+			],
+			"settings": {
+				"foreground": "#965831"
+			}
+		},
+		{
+			"name": "Property Value",
+			"scope": [
+				"css.property.value"
+			],
+			"settings": {
+				"foreground": "#007da3"
+			}
+		},
+		{
+			"name": "Functions",
+			"scope": [
+				"css.function"
+			],
+			"settings": {
+				"foreground": "#160075"
+			}
+		},
+		{
+			"name": "Strings",
+			"scope": [
+				"css.string"
+			],
+			"settings": {
+				"foreground": "#75720a"
+			}
+		},
+		{
+			"name": "Numbers",
+			"scope": [
+				"css.number"
+			],
+			"settings": {
+				"foreground": "#00b36e"
+			}
+		},
+		{
+			"name": "Escape Prefixes",
+			"scope": [
+				"css.escape"
+			],
+			"settings": {
+				"foreground": "#4a0075"
+			}
+		},
+		{
+			"name": "Colors",
+			"scope": [
+				"css.color.hash"
+			],
+			"settings": {
+				"foreground": "#0d7358"
+			}
+		},
+		{
+			"name": "Multiline Comment",
+			"scope": [
+				"css.comment"
+			],
+			"settings": {
+				"foreground": "#337a33"
+			}
+		},
+		{
+			"name": "Inline Comment",
+			"scope": [
+				"novasheets.comment"
+			],
+			"settings": {
+				"fontStyle": "italic",
+				"foreground": "#337a33"
+			}
+		},
+		{
+			"name": "URL",
+			"scope": [
+				"*url*",
+				"*link*",
+				"*uri*"
+			],
+			"settings": {
+				"fontStyle": "underline"
+			}
+		}
+	]
+}
