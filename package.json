@@ -4,7 +4,7 @@
     "description": "Syntax highligher for NovaSheet files",
     "publisher": "Nixinova",
     "repository": "NovaSheets-vscode",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "engines": {
         "vscode": "^1.45.0"
     },

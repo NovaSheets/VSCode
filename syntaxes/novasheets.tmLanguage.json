@@ -4,61 +4,107 @@
 	"scopeName": "source.nss",
 	"patterns": [
 		{
-			"include": "#keywords"
+			"include": "#variables"
+		},
+		{
+			"include": "#seperator"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#css"
+		},
+		{
+			"include": "#patterns"
 		}
 	],
 	"repository": {
-		"keywords": {
+		"variables": {
 			"patterns": [
 				{
-					"match": "^\\s*(@var)\\s(.+?)(\\s//.+|)$",
+					"match": "^\\s*(@var)\\s([^\\]=)]+?)(\\|[^\\]=)]+?)?(\\s//.+|)$",
 					"captures": {
 						"1": {
-							"name": "keyword.control.at-rule.media.css"
+							"name": "keyword.variable.declarator"
 						},
 						"2": {
-							"name": "keyword.other.unit.css"
+							"name": "keyword.other.unit.variable.nsss"
 						},
 						"3": {
-							"name": "comment.block.css"
-						}
-					}
-				},
-				{
-					"match": "(\\$\\()(.+?)(?:(\\s//.+$)|(\\)))",
-					"captures": {
-						"1": {
-							"name": "entity.name.tag.wildcard.css"
-						},
-						"2": {
-							"name": "keyword.other.unit.css"
-						},
-						"3": {
-							"name": "comment.block.css"
+							"name": "keyword.control.variable.attribute.nss"
 						},
 						"4": {
-							"name": "entity.name.tag.wildcard.css"
+							"name": "comment.inline.nss"
 						}
 					}
 				},
 				{
-					"match": "\\s*---\\s*",
-					"name": "header"
+					"match": "(\\$\\()(.+?)(\\|.*?)?(?:(\\s//.+$)|(\\)))",
+					"captures": {
+						"1": {
+							"name": "keyword.variable.substitutor.nss"
+						},
+						"2": {
+							"name": "keyword.other.unit.variable.nss"
+						},
+						"3": {
+							"name": "keyword.control.variable.attribute.nss"
+						},
+						"4": {
+							"name": "comment.inline.nss"
+						},
+						"5": {
+							"name": "keyword.variable.substitutor.nss"
+						}
+					}
 				},
 				{
+					"match": "(\\$\\[)(.+?)(\\|.*?)?(?:(\\s//.+$)|(\\]))",
+					"captures": {
+						"1": {
+							"name": "keyword.variable.substitutor.nss"
+						},
+						"2": {
+							"name": "keyword.control.variable.attribute.nss"
+						},
+						"3": {
+							"name": "invalid.illegal.nss"
+						},
+						"4": {
+							"name": "comment.inline.nss"
+						},
+						"5": {
+							"name": "keyword.variable.substitutor.nss"
+						}
+					}
+				}
+			]
+		},
+		"separator": {
+			"patterns": [
+				{
+					"match": "\\s*---\\s*",
+					"name": "header.seperator.nss"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
 					"match": "(\\s|^)//.+$",
-					"name": "comment.block.css"
+					"name": "comment.inline.nss"
 				},
 				{
 					"match": "/\\*.+\\*/",
 					"name": "comment.block.css"
-				},
+				}
+			]
+		},
+		"css": {
+			"patterns": [
 				{
-					"match": "[0-9]+",
-					"name": "constant.numeric.css"
-				},
-				{
-					"match": "(.+){",
+					"match": "([^@][^{}]*){",
 					"captures": {
 						"1": {
 							"name": "entity.other.attribute-name.class.css"
@@ -66,18 +112,13 @@
 					}
 				},
 				{
-					"match": "([a-z-]+):",
+					"match": "([a-z-]+?([^a-z-; ]*?)[a-z-]+?[^\\\\]):",
 					"captures": {
 						"1": {
 							"name": "support.type.property-name.css"
-						}
-					}
-				},
-				{
-					"match": "(?:\\\"|')(.+)?(?:\\\"|')",
-					"captures": {
-						"1": {
-							"name": "string.quoted.double.css"
+						},
+						"2": {
+							"name": "invalid.illegal.css"
 						}
 					}
 				},
@@ -85,13 +126,37 @@
 					"match": "([a-z-]+)\\s*\\(",
 					"captures": {
 						"1": {
-							"name": "support.function.misc.css"
+							"name": "support.function.css"
 						}
 					}
 				},
 				{
+					"match": "@[a-z]+",
+					"name": "keyword.control.at-rule"
+				},
+				{
+					"match": "'.+?[^\\\\]'|\\\".+?[^\\\\]\\\"|\\\"\\\"|''",
+					"name": "string.quoted"
+				},
+				{
 					"match": "#[0-9a-fA-F]{8}|#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3,4}",
-					"name": "support.constant.color.current.css"
+					"name": "string.unquoted.color.hash.css"
+				},
+				{
+					"match": "!\\s*important",
+					"name": "string.regexp"
+				}
+			]
+		},
+		"other": {
+			"patterns": [
+				{
+					"match": "[-;,.+*/!%(){}a-zA-Z0-9]",
+					"name": "entity.constant.character"
+				},
+				{
+					"match": ".",
+					"name": "invalid"
 				}
 			]
 		}
