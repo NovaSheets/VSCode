@@ -4,13 +4,12 @@
     "description": "Syntax highligher for NovaSheet files",
     "publisher": "Nixinova",
     "repository": "NovaSheets-vscode",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "engines": {
         "vscode": "^1.45.0"
     },
     "categories": [
-        "Programming Languages",
-        "Themes"
+        "Programming Languages"
     ],
     "contributes": {
         "languages": [

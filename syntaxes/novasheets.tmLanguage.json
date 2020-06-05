@@ -4,10 +4,16 @@
 	"scopeName": "source.nss",
 	"patterns": [
 		{
-			"include": "#variables"
+			"include": "#variable_declaration"
 		},
 		{
-			"include": "#seperator"
+			"include": "#variable"
+		},
+		{
+			"include": "#parameter"
+		},
+		{
+			"include": "#separator"
 		},
 		{
 			"include": "#comments"
@@ -16,83 +22,102 @@
 			"include": "#css"
 		},
 		{
-			"include": "#patterns"
+			"include": "#other"
 		}
 	],
 	"repository": {
-		"variables": {
+		"variable_declaration": {
+			"match": "^\\s*(@var)\\s+([^=)\\]]+?)(\\|[^=)\\]]+?)?(\\s//.+|)$",
+			"captures": {
+				"1": {
+					"name": "keyword.variable.declarator"
+				},
+				"2": {
+					"name": "support.type.variable.default.nss"
+				},
+				"3": {
+					"name": "keyword.control.variable.attribute.nss"
+				},
+				"4": {
+					"name": "comment.inline.nss"
+				}
+			}
+		},
+		"variable": {
+			"begin": "(\\$\\()",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.variable.substitutor.nss"
+				}
+			},
+			"end": "(\\))",
+			"endCaptures": {
+				"1": {
+					"name": "keyword.variable.substitutor.nss"
+				}
+			},
 			"patterns": [
 				{
-					"match": "^\\s*(@var)\\s([^\\]=)]+?)(\\|[^\\]=)]+?)?(\\s//.+|)$",
+					"match": "(?<=\\()(@)?([^|=)]+)(?=\\)|\\|)",
 					"captures": {
 						"1": {
-							"name": "keyword.variable.declarator"
+							"name" : "keyword.other.unit.variable.default.nss"
 						},
 						"2": {
-							"name": "keyword.other.unit.variable.nsss"
-						},
-						"3": {
-							"name": "keyword.control.variable.attribute.nss"
-						},
-						"4": {
-							"name": "comment.inline.nss"
+							"name": "support.type.variable.default.nss"
 						}
 					}
 				},
 				{
-					"match": "(\\$\\()(.+?)(\\|.*?)?(?:(\\s//.+$)|(\\)))",
-					"captures": {
-						"1": {
-							"name": "keyword.variable.substitutor.nss"
-						},
-						"2": {
-							"name": "keyword.other.unit.variable.nss"
-						},
-						"3": {
-							"name": "keyword.control.variable.attribute.nss"
-						},
-						"4": {
-							"name": "comment.inline.nss"
-						},
-						"5": {
-							"name": "keyword.variable.substitutor.nss"
-						}
-					}
+					"match": "[^|=]+?(?==)",
+					"name": "keyword.control.variable.attribute.nss"
 				},
 				{
-					"match": "(\\$\\[)(.+?)(\\|.*?)?(?:(\\s//.+$)|(\\]))",
-					"captures": {
-						"1": {
-							"name": "keyword.variable.substitutor.nss"
-						},
-						"2": {
-							"name": "keyword.control.variable.attribute.nss"
-						},
-						"3": {
-							"name": "invalid.illegal.nss"
-						},
-						"4": {
-							"name": "comment.inline.nss"
-						},
-						"5": {
-							"name": "keyword.variable.substitutor.nss"
-						}
-					}
+					"match": "(?<!\\||=)(?:\\||=)",
+					"name": "keyword.variable.substitutor.nss"
+				},
+				{
+					"include": "#variable"
+				},
+				{
+					"include": "#parameter"
+				},
+				{
+					"include": "#css"
+				},
+				{
+					"include": "#other"
 				}
 			]
 		},
-		"separator": {
-			"patterns": [
-				{
-					"match": "\\s*---\\s*",
-					"name": "header.seperator.nss"
+		"parameter": {
+			"match": "(\\$\\[)(.+?)(\\|.*?)?(?:(\\s//.+$)|(\\]))",
+			"captures": {
+				"1": {
+					"name": "keyword.variable.substitutor.nss"
+				},
+				"2": {
+					"name": "keyword.control.variable.attribute.nss"
+				},
+				"3": {
+					"name": "invalid.illegal.nss"
+				},
+				"4": {
+					"name": "comment.inline.nss"
+				},
+				"5": {
+					"name": "keyword.variable.substitutor.nss"
 				}
-			]
+			}
+		},
+		"separator": {
+			"match": "^\\s*---\\s*$",
+			"name": "header.separator.nss"
 		},
 		"comments": {
 			"patterns": [
 				{
-					"match": "(\\s|^)//.+$",
+					"match": "(?<!:)//.+$",
 					"name": "comment.inline.nss"
 				},
 				{
@@ -104,7 +129,7 @@
 		"css": {
 			"patterns": [
 				{
-					"match": "([^@][^{}]*){",
+					"match": "([^@{}]*){",
 					"captures": {
 						"1": {
 							"name": "entity.other.attribute-name.class.css"
@@ -112,7 +137,7 @@
 					}
 				},
 				{
-					"match": "([a-z-]+?([^a-z-; ]*?)[a-z-]+?[^\\\\]):",
+					"match": "([a-z-]+?(?!\\\\)):(?!//)",
 					"captures": {
 						"1": {
 							"name": "support.type.property-name.css"
@@ -131,16 +156,20 @@
 					}
 				},
 				{
-					"match": "@[a-z]+",
+					"match": "@[a-z-]+",
 					"name": "keyword.control.at-rule"
 				},
 				{
-					"match": "'.+?[^\\\\]'|\\\".+?[^\\\\]\\\"|\\\"\\\"|''",
+					"match": "'[^']*?[^\\\\]'|\\\"[^\"]*?[^\\\\]\\\"|\\\"\\\"|''",
 					"name": "string.quoted"
 				},
 				{
-					"match": "#[0-9a-fA-F]{8}|#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3,4}",
+					"match": "#[0-9a-fA-F]{8}(?![0-9a-fA-F])|#[0-9a-fA-F]{6}(?![0-9a-fA-F])|#[0-9a-fA-F]{3,4}(?![0-9a-fA-F])",
 					"name": "string.unquoted.color.hash.css"
+				},
+				{
+					"match": "#[0-9a-fA-F]{9,}|#[0-9a-fA-F]{7}|#[0-9a-fA-F]{5}|#[0-9a-fA-F]{1,2}",
+					"name": "invalid.color.hash.css"
 				},
 				{
 					"match": "!\\s*important",
@@ -151,8 +180,12 @@
 		"other": {
 			"patterns": [
 				{
-					"match": "[-;,.+*/!%(){}a-zA-Z0-9]",
+					"match": "[-;,.+*/!%(){}a-zA-Z]",
 					"name": "entity.constant.character"
+				},
+				{
+					"match": "[0-9]",
+					"name": "constant.numeric.css"
 				},
 				{
 					"match": ".",
