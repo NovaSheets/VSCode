@@ -4,7 +4,13 @@
 	"scopeName": "source.nss",
 	"patterns": [
 		{
+			"include": "#constant"
+		},
+		{
 			"include": "#variable_declaration"
+		},
+		{
+			"include": "#variable_ending"
 		},
 		{
 			"include": "#variable"
@@ -26,22 +32,48 @@
 		}
 	],
 	"repository": {
-		"variable_declaration": {
-			"match": "^\\s*(@var)\\s+([^=)\\]]+?)(\\|[^=)\\]]+?)?(\\s//.+|)$",
+		"constant": {
+			"match": "^\\s*(@const)\\s+([A-Z_]+)\\s+([0-9]+)(\\s//.*)?$",
 			"captures": {
 				"1": {
 					"name": "keyword.variable.declarator"
 				},
 				"2": {
-					"name": "support.type.variable.default.nss"
-				},
-				"3": {
-					"name": "keyword.control.variable.attribute.nss"
+					"name": "support.type.constant.nss"
 				},
 				"4": {
 					"name": "comment.inline.nss"
 				}
 			}
+		},
+		"variable_declaration": {
+			"patterns": [
+				{
+					"match": "(?<=^\\s*@var.+)//.*$",
+					"name": "comment.inline.nss"
+				},
+				{
+					"match": "^\\s*(@var)\\s+((?:[^|=)\\]](?!\/\/))+)(\\|(?:[^=)\\]](?!\/\/))+)*(=?)(?=.*$)",
+					"captures": {
+						"1": {
+							"name": "keyword.variable.declarator"
+						},
+						"2": {
+							"name": "support.type.variable.default.nss"
+						},
+						"3": {
+							"name": "keyword.control.variable.attribute.nss"
+						},
+						"4": {
+							"name": "keyword.variable.declarator"
+						}
+					}
+				}
+			]
+		},
+		"variable_ending": {
+			"match": "^\\s*@endvar\\s*$",
+			"name": "keyword.variable.ending.declarator"
 		},
 		"variable": {
 			"begin": "(\\$\\()",
@@ -61,7 +93,7 @@
 					"match": "(?<=\\()(@)?([^|=)]+)(?=\\)|\\|)",
 					"captures": {
 						"1": {
-							"name" : "keyword.other.unit.variable.default.nss"
+							"name": "keyword.other.unit.variable.default.nss"
 						},
 						"2": {
 							"name": "support.type.variable.default.nss"
@@ -117,11 +149,11 @@
 		"comments": {
 			"patterns": [
 				{
-					"match": "(?<!:)//.+$",
+					"match": "(?<!:)//.*$",
 					"name": "comment.inline.nss"
 				},
 				{
-					"match": "/\\*.+\\*/",
+					"match": "/\\*.*\\*/",
 					"name": "comment.block.css"
 				}
 			]
@@ -180,7 +212,15 @@
 		"other": {
 			"patterns": [
 				{
-					"match": "[-;,.+*/!%(){}a-zA-Z]",
+					"match": "(?<=\\$\\(\\s*@(?:bitwise|logic)[^)]+)(!|not|&|and|nand|or|nor|xor|xnor)",
+					"name": "support.function.bitwise.nss"
+				},
+				{
+					"match": "\\b(true|false)\\b",
+					"name": "keyword.constant.logic.nss"
+				},
+				{
+					"match": "[-:;,.+*/!%(){}a-zA-Z]",
 					"name": "entity.constant.character"
 				},
 				{

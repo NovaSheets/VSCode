@@ -1,6 +1,14 @@
 # Changelog
 
-## 0.2.1
+## 1.2.2
+- Added syntax highlighting for `@const` and `@endvar` declarations.
+- Added syntax highlighting for logical and bitwise operations.
+- Changed variable declaration syntax highlighting to allow equals sign notation to be valid.
+- Fixed lines being automatically indented.
+- Fixed empty comments not having syntax highlighting applied.
+- Fixed colons being treated as invalid in variable contents.
+
+## 1.2.1
 - Re-added numeric syntax highlighting.
 - Added specific syntax highlighting for denoting built-in variables.
 - Added `"` and `'` as auto-closing and auto-surrounding pairs.
@@ -13,7 +21,7 @@
 - Fixed CSS at-rule declarators containing hyphens not having proper syntax highlighting applied.
 - Fixed single-character strings not being treated as valid.
 - Fixed invalid hex colors being treated as valid.
-- Fixed general invalid characters now having syntax highlighting applied.
+- Fixed general invalid characters not having syntax highlighting applied.
 
 ## 1.2.0
 - Added argument syntax highlighting.

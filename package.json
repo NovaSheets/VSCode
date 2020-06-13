@@ -4,7 +4,7 @@
     "description": "Syntax highligher for NovaSheet files",
     "publisher": "Nixinova",
     "repository": "NovaSheets-vscode",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "engines": {
         "vscode": "^1.45.0"
     },
@@ -33,6 +33,11 @@
                 "scopeName": "source.nss",
                 "path": "./syntaxes/novasheets.tmLanguage.json"
             }
-        ]
+        ],
+        "configurationDefaults": {
+            "[novasheets]": {
+                "editor.autoIndent": "none"
+            }
+        }
     }
 }

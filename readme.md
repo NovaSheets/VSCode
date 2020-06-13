@@ -1,3 +1,7 @@
+[![Latest version](https://img.shields.io/github/v/release/Nixinova/NovaSheets-vscode?label=latest&style=flat-square)](https://github.com/Nixinova/NovaSheets/releases)
+[![Marketplace version](https://img.shields.io/visual-studio-marketplace/v/Nixinova.novasheets?label=marketplace&style=flat-square)](https://marketplace.visualstudio.com/items/Nixinova.novasheets)
+[![Last updated](https://img.shields.io/github/release-date/Nixinova/NovaSheets-vscode?label=updated&style=flat-square)](https://github.com/Nixinova/NovaSheets/releases)
+
 This is a [VSCode](https://github.com/microsoft/vscode) extension for [NovaSheets](https://github.com/Nixinova/NovaSheets).
 
 # Features
