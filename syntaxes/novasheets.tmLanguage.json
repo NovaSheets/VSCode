@@ -33,7 +33,7 @@
 	],
 	"repository": {
 		"constant": {
-			"match": "^\\s*(@const)\\s+([A-Z_]+)\\s+([0-9]+)(\\s//.*)?$",
+			"match": "(@const)(?:(\\s+[A-Z_]+)(\\s+(?:[0-9]+|true|false)))?",
 			"captures": {
 				"1": {
 					"name": "keyword.variable.declarator"
@@ -41,8 +41,8 @@
 				"2": {
 					"name": "support.type.constant.nss"
 				},
-				"4": {
-					"name": "comment.inline.nss"
+				"3": {
+					"name": "keyword.control.constant.value.nss"
 				}
 			}
 		},
@@ -53,7 +53,7 @@
 					"name": "comment.inline.nss"
 				},
 				{
-					"match": "^\\s*(@var)\\s+((?:[^|=)\\]](?!\/\/))+)(\\|(?:[^=)\\]](?!\/\/))+)*(=?)(?=.*$)",
+					"match": "(@var)\\s+((?:[^|=)\\]](?!\/\/))+)(\\|(?:[^=)\\]](?!\/\/))+)*(=?)",
 					"captures": {
 						"1": {
 							"name": "keyword.variable.declarator"
@@ -72,7 +72,7 @@
 			]
 		},
 		"variable_ending": {
-			"match": "^\\s*@endvar\\s*$",
+			"match": "@endvar",
 			"name": "keyword.variable.ending.declarator"
 		},
 		"variable": {
@@ -101,11 +101,11 @@
 					}
 				},
 				{
-					"match": "[^|=]+?(?==)",
+					"match": "(?<!@.*)[^|=]+?(?==)",
 					"name": "keyword.control.variable.attribute.nss"
 				},
 				{
-					"match": "(?<!\\||=)(?:\\||=)",
+					"match": "\\|+|(?<!@.*|=)=",
 					"name": "keyword.variable.substitutor.nss"
 				},
 				{
@@ -142,10 +142,6 @@
 				}
 			}
 		},
-		"separator": {
-			"match": "^\\s*---\\s*$",
-			"name": "header.separator.nss"
-		},
 		"comments": {
 			"patterns": [
 				{
@@ -153,7 +149,7 @@
 					"name": "comment.inline.nss"
 				},
 				{
-					"match": "/\\*.*\\*/",
+					"match": "/\\*.*?\\*/",
 					"name": "comment.block.css"
 				}
 			]
@@ -212,7 +208,7 @@
 		"other": {
 			"patterns": [
 				{
-					"match": "(?<=\\$\\(\\s*@(?:bitwise|logic)[^)]+)(!|not|&|and|nand|or|nor|xor|xnor)",
+					"match": "(?<=\\$\\(\\s*@(?:bitwise|boolean|if)[^)]+)(&|\\||!|not|&|and|nand|or|nor|xor|xnor)",
 					"name": "support.function.bitwise.nss"
 				},
 				{
@@ -220,16 +216,12 @@
 					"name": "keyword.constant.logic.nss"
 				},
 				{
-					"match": "[-:;,.+*/!%(){}a-zA-Z]",
+					"match": "[-:;,.+~^*/!%(){}a-zA-Z]",
 					"name": "entity.constant.character"
 				},
 				{
 					"match": "[0-9]",
 					"name": "constant.numeric.css"
-				},
-				{
-					"match": ".",
-					"name": "invalid"
 				}
 			]
 		}

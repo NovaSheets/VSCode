@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.2.3
+- Changed syntax highlighting rules to always apply to `@var`, `@endvar`, and `@const` anywhere in a line
+- Changed syntax highlighting of `@const` declarations to allow boolean values and to apply syntax highlighting to the value of the constant.
+- Removed syntax highlighting for the removed front matter separator `---`.
+- Removed syntax highlighting for invalid characters as it has too many false positives.
+- Removed syntax highlighting for parameters names in built-in variables.
+- Fixed syntax highlighting of block comments extending the boundary of the comment.
+- Fixed empty arguments and empty parameters not being treated as valid.
+
 ## 1.2.2
 - Added syntax highlighting for `@const` and `@endvar` declarations.
 - Added syntax highlighting for logical and bitwise operations.
