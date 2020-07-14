@@ -22,6 +22,9 @@
 			"include": "#separator"
 		},
 		{
+			"include": "#loop_identifier"
+		},
+		{
 			"include": "#comments"
 		},
 		{
@@ -79,13 +82,13 @@
 			"begin": "(\\$\\()",
 			"beginCaptures": {
 				"1": {
-					"name": "keyword.variable.substitutor.nss"
+					"name": "constant.character.nss"
 				}
 			},
 			"end": "(\\))",
 			"endCaptures": {
 				"1": {
-					"name": "keyword.variable.substitutor.nss"
+					"name": "constant.character.nss"
 				}
 			},
 			"patterns": [
@@ -106,7 +109,7 @@
 				},
 				{
 					"match": "\\|+|(?<!@.*|=)=",
-					"name": "keyword.variable.substitutor.nss"
+					"name": "constant.character.nss"
 				},
 				{
 					"include": "#variable"
@@ -123,30 +126,59 @@
 			]
 		},
 		"parameter": {
-			"match": "(\\$\\[)(.+?)(\\|.*?)?(?:(\\s//.+$)|(\\]))",
+			"match": "(\\$\\[)(.+?)(\\|(.*?))?(?:(\\s//.+$)|(\\]))",
 			"captures": {
 				"1": {
-					"name": "keyword.variable.substitutor.nss"
+					"name": "constant.character.nss"
 				},
 				"2": {
 					"name": "keyword.control.variable.attribute.nss"
 				},
 				"3": {
-					"name": "invalid.illegal.nss"
+					"name": "constant.character.nss"
 				},
 				"4": {
-					"name": "comment.inline.nss"
+					"name": "constant.character.escape.default_argument.nss"
 				},
 				"5": {
-					"name": "keyword.variable.substitutor.nss"
+					"name": "comment.inline.nss"
+				},
+				"6": {
+					"name": "constant.character.nss"
 				}
 			}
+		},
+		"loop_identifier": {
+			"match": "\\$i|\\$v\\[?|(?<=\\$v\\[[^\\]]*?)\\]",
+			"name": "keyword.variable.identifier.loop.nss"
 		},
 		"comments": {
 			"patterns": [
 				{
-					"match": "(?<!:)//.*$",
+					"match": "##!.*",
+					"name": "comment.block.documentation"
+				},
+				{
+					"match": "(?<![a-z]+:)//.*$",
 					"name": "comment.inline.nss"
+				},
+				{
+					"match": "(/\\*/)(.*?)(/\\*/)",
+					"captures": {
+						"1": {
+							"name": "comment.static.nss"
+						},
+						"2": {
+							"name": "markup.italic.content.nss"
+						},
+						"3": {
+							"name": "comment.static.nss"
+						}
+					}
+				},
+				{
+					"match": "(/\\*\\[|\\]\\*/)",
+					"name": "comment.block.css"
 				},
 				{
 					"match": "/\\*.*?\\*/",
@@ -156,6 +188,10 @@
 		},
 		"css": {
 			"patterns": [
+				{
+					"match": "[a-z]+://\\w+(\\.\\w+)+(/\\S+?)?(?!\\))",
+					"name": "markup.underline.link"
+				},
 				{
 					"match": "([^@{}]*){",
 					"captures": {
@@ -201,7 +237,7 @@
 				},
 				{
 					"match": "!\\s*important",
-					"name": "string.regexp"
+					"name": "string.regexp.important.css"
 				}
 			]
 		},
@@ -216,12 +252,20 @@
 					"name": "keyword.constant.logic.nss"
 				},
 				{
-					"match": "[-:;,.+~^*/!%(){}a-zA-Z]",
-					"name": "entity.constant.character"
+					"match": "(?<=\\d\\s*)(em|rem|en|ex|px|pt|pc|cm|mm|m|ft|in|%)\\b",
+					"name": "constant.numeric.unit.css"
 				},
 				{
-					"match": "[0-9]",
+					"match": "\\d+e\\d+",
 					"name": "constant.numeric.css"
+				},
+				{
+					"match": "0x[0-9a-f]*\\.?[0-9a-f]+|0b[01]*\\.?[01]+|0o[0-7]*\\.?[0-7]+|[0-9]*\\.?[0-9]+",
+					"name": "constant.numeric.css"
+				},
+				{
+					"match": "[-:;,.+~^*/!%(){}a-zA-Z]",
+					"name": "entity.constant.character"
 				}
 			]
 		}

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.4
+- Added syntax highlighting for static comments (`/*/ text /*/`) and parsed comments (`/*[ ]*/`).
+- Added syntax highlighting for loop indentifiers `$i`, `$v`, and `$v[n]`.
+- Added syntax highlighting for default argument content.
+- Added syntax highlighting for CSS units.
+- Added syntax highlighting for all numeric types.
+- Added syntax highlighting for URLs.
+
 ## 1.2.3
 - Changed syntax highlighting rules to always apply to `@var`, `@endvar`, and `@const` anywhere in a line
 - Changed syntax highlighting of `@const` declarations to allow boolean values and to apply syntax highlighting to the value of the constant.
