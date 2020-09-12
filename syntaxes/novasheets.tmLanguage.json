@@ -16,6 +16,12 @@
 			"include": "#variable"
 		},
 		{
+			"include": "#declaration_substitution"
+		},
+		{
+			"include": "#object_getter"
+		},
+		{
 			"include": "#parameter"
 		},
 		{
@@ -124,6 +130,34 @@
 					"include": "#other"
 				}
 			]
+		},
+		"declaration_substitution": {
+			"match": "(\\$<)([\\w.:~+>()]+)(>)",
+			"captures": {
+				"1": {
+					"name": "constant.character.nss"
+				},
+				"2": {
+					"name": "entity.other.attribute-name.class.css"
+				},
+				"3": {
+					"name": "constant.character.nss"
+				}
+			}
+		},
+		"object_getter": {
+			"match": "(?<=>|})(\\[)(\\w+?)(\\])",
+			"captures": {
+				"1": {
+					"name": "constant.character.nss"
+				},
+				"2": {
+					"name": "support.type.property-name.css"
+				},
+				"3": {
+					"name": "constant.character.nss"
+				}
+			}
 		},
 		"parameter": {
 			"match": "(\\$\\[)(.+?)(\\|(.*?))?(?:(\\s//.+$)|(\\]))",

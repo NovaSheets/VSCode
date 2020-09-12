@@ -4,9 +4,9 @@
     "description": "Syntax highlighter for NovaSheets files",
     "publisher": "Nixinova",
     "repository": "NovaSheets-vscode",
-    "version": "1.2.4",
+    "version": "1.2.5",
     "engines": {
-        "vscode": "^1.45.0"
+        "vscode": "^1.49.0"
     },
     "categories": [
         "Programming Languages"
@@ -22,7 +22,9 @@
                 ],
                 "extensions": [
                     ".nss",
-                    ".nss.txt"
+                    ".nss.txt",
+                    ".novasheet",
+                    ".novasheets"
                 ],
                 "configuration": "./language-configuration.json"
             }

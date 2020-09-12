@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.5
+- Added syntax highlighting for CSS declaration substitutions.
+- Added syntax highlighting for object getter notaton.
+- Added `.novasheet` and `.novasheets` as valid file extensions.
+
 ## 1.2.4
 - Added syntax highlighting for static comments (`/*/ text /*/`) and parsed comments (`/*[ ]*/`).
 - Added syntax highlighting for loop indentifiers `$i`, `$v`, and `$v[n]`.
