@@ -1,16 +1,24 @@
 {
     "name": "novasheets",
     "displayName": "NovaSheets",
-    "description": "Syntax highlighter for NovaSheets files",
+    "description": "Syntax highlighter and formatter for NovaSheets files",
     "publisher": "Nixinova",
     "repository": "NovaSheets-vscode",
-    "version": "1.2.5",
+    "version": "1.3.0",
+    "license": "ISC",
+    "scripts": {
+        "compile": "yaml2json syntaxes/novasheets.tmLanguage.yaml --save"
+    },
     "engines": {
         "vscode": "^1.49.0"
     },
     "categories": [
         "Programming Languages"
     ],
+    "activationEvents": [
+        "onLanguage:novasheets"
+    ],
+    "main": "./formatters/formatter",
     "contributes": {
         "languages": [
             {
@@ -18,13 +26,11 @@
                 "aliases": [
                     "NovaSheets",
                     "novasheets",
-                    "nss"
+                    "nvss"
                 ],
                 "extensions": [
-                    ".nss",
-                    ".nss.txt",
                     ".novasheet",
-                    ".novasheets"
+                    ".nvss"
                 ],
                 "configuration": "./language-configuration.json"
             }
@@ -32,14 +38,12 @@
         "grammars": [
             {
                 "language": "novasheets",
-                "scopeName": "source.nss",
+                "scopeName": "source.novasheets",
                 "path": "./syntaxes/novasheets.tmLanguage.json"
             }
-        ],
-        "configurationDefaults": {
-            "[novasheets]": {
-                "editor.autoIndent": "none"
-            }
-        }
+        ]
+    },
+    "devDependencies": {
+        "yamljs": "^0.3.0"
     }
 }

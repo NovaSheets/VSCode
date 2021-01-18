@@ -1,31 +1,19 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "NovaSheets",
-	"scopeName": "source.nss",
+	"scopeName": "source.novasheets",
 	"patterns": [
+		{
+			"include": "#variables"
+		},
+		{
+			"include": "#objects"
+		},
 		{
 			"include": "#constant"
 		},
 		{
-			"include": "#variable_declaration"
-		},
-		{
-			"include": "#variable_ending"
-		},
-		{
-			"include": "#variable"
-		},
-		{
-			"include": "#declaration_substitution"
-		},
-		{
-			"include": "#object_getter"
-		},
-		{
-			"include": "#parameter"
-		},
-		{
-			"include": "#separator"
+			"include": "#simple_breakpoint"
 		},
 		{
 			"include": "#loop_identifier"
@@ -41,81 +29,75 @@
 		}
 	],
 	"repository": {
-		"constant": {
-			"match": "(@const)(?:(\\s+[A-Z_]+)(\\s+(?:[0-9]+|true|false)))?",
-			"captures": {
-				"1": {
-					"name": "keyword.variable.declarator"
-				},
-				"2": {
-					"name": "support.type.constant.nss"
-				},
-				"3": {
-					"name": "keyword.control.constant.value.nss"
-				}
-			}
-		},
-		"variable_declaration": {
+		"variables": {
 			"patterns": [
 				{
-					"match": "(?<=^\\s*@var.+)//.*$",
-					"name": "comment.inline.nss"
+					"include": "#variable_declaration"
 				},
 				{
-					"match": "(@var)\\s+((?:[^|=)\\]](?!\/\/))+)(\\|(?:[^=)\\]](?!\/\/))+)*(=?)",
-					"captures": {
-						"1": {
-							"name": "keyword.variable.declarator"
-						},
-						"2": {
-							"name": "support.type.variable.default.nss"
-						},
-						"3": {
-							"name": "keyword.control.variable.attribute.nss"
-						},
-						"4": {
-							"name": "keyword.variable.declarator"
-						}
-					}
+					"include": "#variable_ending"
+				},
+				{
+					"include": "#variable"
+				},
+				{
+					"include": "#parameter"
 				}
 			]
 		},
+		"variable_declaration": {
+			"match": "(@var)\\s+((?:[^|=)\\]](?!//))+)(\\|(?:[^=)\\]](?!//))+)*(=?)",
+			"captures": {
+				"1": {
+					"name": "keyword.variable.declarator.novasheets"
+				},
+				"2": {
+					"name": "support.type.variable.default.novasheets"
+				},
+				"3": {
+					"name": "keyword.control.variable.attribute.novasheets"
+				},
+				"4": {
+					"name": "keyword.variable.declarator.novasheets"
+				}
+			}
+		},
 		"variable_ending": {
 			"match": "@endvar",
-			"name": "keyword.variable.ending.declarator"
+			"name": "keyword.variable.ending.declarator.novasheets"
 		},
 		"variable": {
 			"begin": "(\\$\\()",
 			"beginCaptures": {
 				"1": {
-					"name": "constant.character.nss"
+					"name": "constant.character.novasheets"
 				}
 			},
 			"end": "(\\))",
 			"endCaptures": {
 				"1": {
-					"name": "constant.character.nss"
+					"name": "constant.character.novasheets"
 				}
 			},
 			"patterns": [
 				{
-					"match": "(?<=\\()(@)?([^|=)]+)(?=\\)|\\|)",
+					"match": "(?<=\\()\\s*(@)?([^|=)]+)(?=\\)|\\|)",
 					"captures": {
 						"1": {
-							"name": "keyword.other.unit.variable.default.nss"
+							"name": "keyword.other.unit.variable.default.novasheets"
 						},
 						"2": {
-							"name": "support.type.variable.default.nss"
+							"name": "support.type.variable.default.novasheets"
 						}
 					}
 				},
 				{
 					"match": "(?<!@.*)[^|=]+?(?==)",
-					"name": "keyword.control.variable.attribute.nss"
+					"name": "keyword.control.variable.attribute.novasheets"
 				},
 				{
 					"match": "\\|+|(?<!@.*|=)=",
-					"name": "constant.character.nss"
+					"name": "constant.character.novasheets"
 				},
 				{
 					"include": "#variable"
@@ -131,82 +113,119 @@
 				}
 			]
 		},
-		"declaration_substitution": {
-			"match": "(\\$<)([\\w.:~+>()]+)(>)",
-			"captures": {
-				"1": {
-					"name": "constant.character.nss"
-				},
-				"2": {
-					"name": "entity.other.attribute-name.class.css"
-				},
-				"3": {
-					"name": "constant.character.nss"
-				}
-			}
-		},
-		"object_getter": {
-			"match": "(?<=>|})(\\[)(\\w+?)(\\])",
-			"captures": {
-				"1": {
-					"name": "constant.character.nss"
-				},
-				"2": {
-					"name": "support.type.property-name.css"
-				},
-				"3": {
-					"name": "constant.character.nss"
-				}
-			}
-		},
 		"parameter": {
 			"match": "(\\$\\[)(.+?)(\\|(.*?))?(?:(\\s//.+$)|(\\]))",
 			"captures": {
 				"1": {
-					"name": "constant.character.nss"
+					"name": "constant.character.novasheets"
 				},
 				"2": {
-					"name": "keyword.control.variable.attribute.nss"
+					"name": "keyword.control.variable.attribute.novasheets"
 				},
 				"3": {
-					"name": "constant.character.nss"
+					"name": "constant.character.novasheets"
 				},
 				"4": {
-					"name": "constant.character.escape.default_argument.nss"
+					"name": "constant.character.escape.default_argument.novasheets"
 				},
 				"5": {
-					"name": "comment.inline.nss"
+					"name": "comment.inline.novasheets"
 				},
 				"6": {
-					"name": "constant.character.nss"
+					"name": "constant.character.novasheets"
+				}
+			}
+		},
+		"objects": {
+			"patterns": [
+				{
+					"match": "(\\$<)([\\s\\w.:~+>()]+)(>)",
+					"captures": {
+						"1": {
+							"name": "constant.character.novasheets"
+						},
+						"2": {
+							"name": "entity.other.attribute-name.class.css"
+						},
+						"3": {
+							"name": "constant.character.novasheets"
+						}
+					}
+				},
+				{
+					"match": "(?<=>|})\\s*(\\<)(\\w+?)(\\>)",
+					"captures": {
+						"1": {
+							"name": "constant.character.novasheets"
+						},
+						"2": {
+							"name": "support.type.property-name.css"
+						},
+						"3": {
+							"name": "constant.character.novasheets"
+						}
+					}
+				}
+			]
+		},
+		"constant": {
+			"match": "(@const)(?:(\\s+[A-Z_]+)(\\s+(?:[0-9]+|true|false)))?",
+			"captures": {
+				"1": {
+					"name": "keyword.variable.declarator.novasheets"
+				},
+				"2": {
+					"name": "support.type.constant.novasheets"
+				},
+				"3": {
+					"name": "keyword.control.constant.value.novasheets"
+				}
+			}
+		},
+		"simple_breakpoint": {
+			"match": "(@)\\s*(?:(\\d+)(px))\\s*(\\.\\.+)?\\s*(?:(\\d+)(px))?",
+			"captures": {
+				"1": {
+					"name": "keyword.control.at-rule"
+				},
+				"2": {
+					"name": "constant.numeric.css"
+				},
+				"3": {
+					"name": "constant.numeric.unit.css"
+				},
+				"4": {
+					"name": "constant.character.novasheets"
+				},
+				"5": {
+					"name": "constant.numeric.css"
+				},
+				"6": {
+					"name": "constant.numeric.unit.css"
 				}
 			}
 		},
 		"loop_identifier": {
 			"match": "\\$i|\\$v\\[?|(?<=\\$v\\[[^\\]]*?)\\]",
-			"name": "keyword.variable.identifier.loop.nss"
+			"name": "keyword.variable.identifier.loop.novasheets"
 		},
 		"comments": {
 			"patterns": [
 				{
-					"match": "##!.*",
-					"name": "comment.block.documentation"
-				},
-				{
 					"match": "(?<![a-z]+:)//.*$",
-					"name": "comment.inline.nss"
+					"name": "comment.inline.novasheets"
 				},
 				{
 					"match": "(/\\*/)(.*?)(/\\*/)",
 					"captures": {
 						"1": {
-							"name": "comment.static.nss"
+							"name": "comment.static.novasheets"
 						},
 						"2": {
-							"name": "markup.italic.content.nss"
+							"name": "markup.italic.content.novasheets"
 						},
 						"3": {
-							"name": "comment.static.nss"
+							"name": "comment.static.novasheets"
 						}
 					}
 				},
@@ -223,51 +242,28 @@
 		"css": {
 			"patterns": [
 				{
-					"match": "[a-z]+://\\w+(\\.\\w+)+(/\\S+?)?(?!\\))",
-					"name": "markup.underline.link"
+					"match": "[a-z]+://\\w+(\\.\\w+)+(/[^\\s)]+)?",
+					"name": "string.unquoted markup.underline.link"
 				},
 				{
-					"match": "([^@{}]*){",
-					"captures": {
-						"1": {
-							"name": "entity.other.attribute-name.class.css"
-						}
-					}
+					"match": "(?<!@[^$@{}]*)([^$@{}]+)(?=\\{|@[^{]+\\{)",
+					"name": "entity.other.attribute-name.class.css"
 				},
 				{
-					"match": "([a-z-]+?(?!\\\\)):(?!//)",
-					"captures": {
-						"1": {
-							"name": "support.type.property-name.css"
-						},
-						"2": {
-							"name": "invalid.illegal.css"
-						}
-					}
+					"match": "(?<!@)[\\w-]+(?=\\s*\\()",
+					"name": "support.function.css"
 				},
 				{
-					"match": "([a-z-]+)\\s*\\(",
-					"captures": {
-						"1": {
-							"name": "support.function.css"
-						}
-					}
-				},
-				{
-					"match": "@[a-z-]+",
+					"match": "(?<!\\()@[\\w-]+",
 					"name": "keyword.control.at-rule"
 				},
 				{
-					"match": "'[^']*?[^\\\\]'|\\\"[^\"]*?[^\\\\]\\\"|\\\"\\\"|''",
-					"name": "string.quoted"
-				},
-				{
-					"match": "#[0-9a-fA-F]{8}(?![0-9a-fA-F])|#[0-9a-fA-F]{6}(?![0-9a-fA-F])|#[0-9a-fA-F]{3,4}(?![0-9a-fA-F])",
-					"name": "string.unquoted.color.hash.css"
-				},
-				{
-					"match": "#[0-9a-fA-F]{9,}|#[0-9a-fA-F]{7}|#[0-9a-fA-F]{5}|#[0-9a-fA-F]{1,2}",
-					"name": "invalid.color.hash.css"
+					"match": "([a-z-]+?(?!\\\\))\\s*:(?!//)",
+					"captures": {
+						"1": {
+							"name": "support.type.property-name.css"
+						}
+					}
 				},
 				{
 					"match": "!\\s*important",
@@ -279,18 +275,30 @@
 			"patterns": [
 				{
 					"match": "(?<=\\$\\(\\s*@(?:bitwise|boolean|if)[^)]+)(&|\\||!|not|&|and|nand|or|nor|xor|xnor)",
-					"name": "support.function.bitwise.nss"
+					"name": "support.function.bitwise.novasheets"
 				},
 				{
-					"match": "\\b(true|false)\\b",
-					"name": "keyword.constant.logic.nss"
+					"match": "'[^']*?[^\\\\]'|\"[^\"]*?[^\\\\]\"|\"\"|''",
+					"name": "string.quoted"
 				},
 				{
-					"match": "(?<=\\d\\s*)(em|rem|en|ex|px|pt|pc|cm|mm|m|ft|in|%)\\b",
+					"match": "\b(true|false)\b",
+					"name": "keyword.constant.logic.novasheets"
+				},
+				{
+					"match": "#[0-9a-fA-F]{8}(?![0-9a-fA-F])|#[0-9a-fA-F]{6}(?![0-9a-fA-F])|#[0-9a-fA-F]{3,4}(?![0-9a-fA-F])",
+					"name": "string.unquoted.color.hash.css"
+				},
+				{
+					"match": "#[0-9a-fA-F]{9,}|#[0-9a-fA-F]{7}|#[0-9a-fA-F]{5}|#[0-9a-fA-F]{1,2}",
+					"name": "invalid.color.hash.css"
+				},
+				{
+					"match": "(?<=\\d\\s*)(em|rem|en|ex|px|pt|pc|cm|mm|m|ft|in|%)\b",
 					"name": "constant.numeric.unit.css"
 				},
 				{
-					"match": "\\d+e\\d+",
+					"match": "\\d+e-?\\d+",
 					"name": "constant.numeric.css"
 				},
 				{
@@ -298,7 +306,7 @@
 					"name": "constant.numeric.css"
 				},
 				{
-					"match": "[-:;,.+~^*/!%(){}a-zA-Z]",
+					"match": "[-:;,.+~^*/!%(){}\\w]",
 					"name": "entity.constant.character"
 				}
 			]

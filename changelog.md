@@ -1,9 +1,25 @@
 # Changelog
 
+## 1.3.0
+- Added code formatter.
+- Added syntax highlighting for simple breakpoints.
+- Added `.nvss` as an applicable file extension.
+- Readded automatic indentation.
+- Updated syntax highlighting of CSS declaration substitutions.
+- Removed `.nss`, `.nss.txt`, and `.novasheets` as applicable file extensions.
+- Changed URL syntax highlighting to apply colouring as well as an underline.
+- Fixed numeric syntax highlighting not applying to negative exponents.
+- Fixed object getter syntax highlighting not being applied when its selector contains spaces.
+- Fixed CSS property syntax highlighting not being applied when the property name contains trailing whitespace.
+- Fixed declaration substitution syntax highlighting not being applied when containing leading whitespace.
+- Fixed built-in function syntax highlighting not being applied when the variable name contains leading whitespace.
+- Fixed at-rule syntax highlighting getting overwritten.
+- Refactored code to be compiled from a YAML tmLanguage file.
+
 ## 1.2.5
 - Added syntax highlighting for CSS declaration substitutions.
 - Added syntax highlighting for object getter notaton.
-- Added `.novasheet` and `.novasheets` as valid file extensions.
+- Added `.novasheet` and `.novasheets` as applicable file extensions.
 
 ## 1.2.4
 - Added syntax highlighting for static comments (`/*/ text /*/`) and parsed comments (`/*[ ]*/`).
@@ -50,10 +66,10 @@
 - Added error checking for illegal characters.
 - Added syntax highlighting for CSS at-rules and `!important`.
 - Changed color of variable declarator `@var`.
-- Changed internal code to be more semantically correct.
 - Changed string parsing to include the quotes in the syntax highlighting.
 - Removed numeric syntax highlighting.
 - Fixed string parsing allowing alternating quotation marks.
+- Refactored internal code to be more semantically correct.
 
 ## 1.1.1
 - Fixed syntax highlighting of comments appearing as variable contents.
