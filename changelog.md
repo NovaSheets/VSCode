@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.1
+- Added angle brackets as auto-enclosing characters.
+- Changed syntax highlighting of parser constants from `@const` to `@option`.
+- Removed `.novasheet` as an applicable file extension.
+- Fixed variable syntax highlighting being broken by nested brackets.
+- Fixed loop identifier syntax highlighting not being applied.
+- Fixed simple breakpoint syntax highlighting not being applied when the width is set to a variable.
+
 ## 1.3.0
 - Added code formatter.
 - Added syntax highlighting for simple breakpoints.

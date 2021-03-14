@@ -4,13 +4,14 @@
 [![Downloads](https://img.shields.io/visual-studio-marketplace/d/Nixinova.novasheets?style=flat-square&logo=visual-studio)](https://marketplace.visualstudio.com/items/Nixinova.novasheets)
 [![Installs](https://img.shields.io/visual-studio-marketplace/i/Nixinova.novasheets?style=flat-square&logo=visual-studio)](https://marketplace.visualstudio.com/items/Nixinova.novasheets)
 
-This is a [VSCode](https://github.com/microsoft/vscode) extension for [NovaSheets](https://github.com/Nixinova/NovaSheets) syntax highlighting.
+This is a [VSCode](https://github.com/microsoft/vscode) extension for [NovaSheets](https://github.com/NovaSheets/NovaSheets) formatting and syntax highlighting.
 
 # Features
-This extension includes syntax highlighting for NovaSheet syntax, including NovaSheets variables and comments, as well as regular CSS content.
+This extension includes a code formatter and syntax highlighting for NovaSheets syntax, including NovaSheets variables and comments, as well as regular CSS content.
 
 # Installation
-This extension is available in the [VSCode Marketplace](https://marketplace.visualstudio.com/items/Nixinova.novasheets); install it either from there, by searching "NovaSheets" inside VSCode, or by downloading the package found in the [releases tab](https://github.com/Nixinova/NovaSheets-vscode/releases).
+This extension is available in the [VSCode Marketplace](https://marketplace.visualstudio.com/items/Nixinova.novasheets); install it either from there, by searching "NovaSheets" inside VSCode, or by downloading the package found in the [releases tab](https://github.com/NovaSheets/vscode/releases).
 
 # Usage
-Just load a NovaSheets file with valid file extension in VSCode and NovaSheets syntax highlighting should occur. Valid extensions are  `.nss.`, `.nss.txt.`, `.novasheet`, and `.novasheets`.
+Just load a NovaSheets file with a `.nvss` file extension in VSCode and NovaSheets syntax highlighting should occur.
+Format the file using the default formatting command (`Alt+Shift+F` by default).

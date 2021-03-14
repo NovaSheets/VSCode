@@ -1,7 +1,9 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "NovaSheets",
 	"scopeName": "source.novasheets",
+	"fileTypes": [
+		".nvss"
+	],
 	"patterns": [
 		{
 			"include": "#variables"
@@ -10,7 +12,7 @@
 			"include": "#objects"
 		},
 		{
-			"include": "#constant"
+			"include": "#parser_constant"
 		},
 		{
 			"include": "#simple_breakpoint"
@@ -46,7 +48,7 @@
 			]
 		},
 		"variable_declaration": {
-			"match": "(@var)\\s+((?:[^|=)\\]](?!//))+)(\\|(?:[^=)\\]](?!//))+)*(=?)",
+			"match": "(@var)\\s+((?:[^|=)\\]](?!\\/\\/))+)(\\|(?:[^=)\\]](?!\\/\\/))+)*(=?)",
 			"captures": {
 				"1": {
 					"name": "keyword.variable.declarator.novasheets"
@@ -104,6 +106,9 @@
 				},
 				{
 					"include": "#parameter"
+				},
+				{
+					"include": "#loop_identifier"
 				},
 				{
 					"include": "#css"
@@ -168,40 +173,28 @@
 				}
 			]
 		},
-		"constant": {
-			"match": "(@const)(?:(\\s+[A-Z_]+)(\\s+(?:[0-9]+|true|false)))?",
+		"parser_constant": {
+			"match": "(@option)(?:(\\s+[A-Z_]+)(\\s+(?:[0-9]+|true|false)))?",
 			"captures": {
 				"1": {
 					"name": "keyword.variable.declarator.novasheets"
 				},
 				"2": {
-					"name": "support.type.constant.novasheets"
+					"name": "support.type.constant..parsernovasheets"
 				},
 				"3": {
-					"name": "keyword.control.constant.value.novasheets"
+					"name": "keyword.control.constant.parser.value.novasheets"
 				}
 			}
 		},
 		"simple_breakpoint": {
-			"match": "(@)\\s*(?:(\\d+)(px))\\s*(\\.\\.+)?\\s*(?:(\\d+)(px))?",
+			"match": "(@(?!\\w))|\\.{2,}",
 			"captures": {
 				"1": {
 					"name": "keyword.control.at-rule"
 				},
 				"2": {
-					"name": "constant.numeric.css"
-				},
-				"3": {
-					"name": "constant.numeric.unit.css"
-				},
-				"4": {
 					"name": "constant.character.novasheets"
-				},
-				"5": {
-					"name": "constant.numeric.css"
-				},
-				"6": {
-					"name": "constant.numeric.unit.css"
 				}
 			}
 		},
@@ -278,11 +271,15 @@
 					"name": "support.function.bitwise.novasheets"
 				},
 				{
-					"match": "'[^']*?[^\\\\]'|\"[^\"]*?[^\\\\]\"|\"\"|''",
-					"name": "string.quoted"
+					"match": "(?<!\\$)\\([^)]*?\\)",
+					"name": "meta.brackets.novasheets"
 				},
 				{
-					"match": "\b(true|false)\b",
+					"match": "'[^']*?[^\\\\]'|\"[^\"]*?[^\\\\]\"|\"\"|''",
+					"name": "string.quoted.novasheets"
+				},
+				{
+					"match": "\\b(true|false)\\b",
 					"name": "keyword.constant.logic.novasheets"
 				},
 				{
@@ -294,7 +291,7 @@
 					"name": "invalid.color.hash.css"
 				},
 				{
-					"match": "(?<=\\d\\s*)(em|rem|en|ex|px|pt|pc|cm|mm|m|ft|in|%)\b",
+					"match": "(?<=\\d\\s*)(em|rem|en|ex|px|pt|pc|cm|mm|m|ft|in|%)\\b",
 					"name": "constant.numeric.unit.css"
 				},
 				{
