@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.4.0
+- Added breakpoint snippet.
+- Added previous element selector syntax highlighting.
+- Added regular expression syntax highlighting
+- Added full numeric unit syntax highlighting.
+- Changed variable syntax highlighting.
+- Changed `!important` syntax highlighting.
+- Changed selector separator syntax highlighting.
+- Removed static comment inner syntax highlighting.
+- Revamped internal syntax highlighting tokenisation.
+- Fixed formatter not cleanup up colons and trailing spaces.
+
 ## 1.3.1
 - Added angle brackets as auto-enclosing characters.
 - Changed syntax highlighting of parser constants from `@const` to `@option`.

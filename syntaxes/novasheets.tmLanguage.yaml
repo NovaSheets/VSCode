@@ -1,196 +1,312 @@
-# compiles to .json
 name: NovaSheets
 scopeName: source.novasheets
 fileTypes:
-  - ".nvss"
+  - '.nvss'
+
 patterns:
-  - include: "#variables"
-  - include: "#objects"
-  - include: "#parser_constant"
-  - include: "#simple_breakpoint"
-  - include: "#loop_identifier"
-  - include: "#comments"
-  - include: "#css"
-  - include: "#other"
+  - include: '#novasheets'
+  - include: '#css'
+  - include: '#chars'
 
 repository:
-
-  variables:
+  novasheets:
     patterns:
-      - include: "#variable_declaration"
-      - include: "#variable_ending"
-      - include: "#variable"
-      - include: "#parameter"
-
-  variable_declaration:
-    match: "(@var)\\s+((?:[^|=)\\]](?!\\/\\/))+)(\\|(?:[^=)\\]](?!\\/\\/))+)*(=?)"
-    captures:
-      '1': { name: keyword.variable.declarator.novasheets }
-      '2': { name: support.type.variable.default.novasheets }
-      '3': { name: keyword.control.variable.attribute.novasheets }
-      '4': { name: keyword.variable.declarator.novasheets }
-
-  variable_ending:
-    match: "@endvar"
-    name: keyword.variable.ending.declarator.novasheets
-
-  variable:
-    begin: "(\\$\\()"
-    beginCaptures:
-      '1': { name: constant.character.novasheets }
-    end: "(\\))"
-    endCaptures:
-      '1': { name: constant.character.novasheets }
-    patterns:
-      # Variable name
-      - match: "(?<=\\()\\s*(@)?([^|=)]+)(?=\\)|\\|)"
-        captures:
-          '1': { name: keyword.other.unit.variable.default.novasheets }
-          '2': { name: support.type.variable.default.novasheets }
-      # Parameter
-      - match: "(?<!@.*)[^|=]+?(?==)"
-        name: keyword.control.variable.attribute.novasheets
-      # Punctuation
-      - match: "\\|+|(?<!@.*|=)="
-        name: constant.character.novasheets
-      - include: "#variable"
-      - include: "#parameter"
-      - include: "#loop_identifier"
-      - include: "#css"
-      - include: "#other"
-
-  parameter:
-    match: "(\\$\\[)(.+?)(\\|(.*?))?(?:(\\s//.+$)|(\\]))"
-    captures:
-      '1': { name: constant.character.novasheets }
-      '2': { name: keyword.control.variable.attribute.novasheets }
-      '3': { name: constant.character.novasheets }
-      '4': { name: constant.character.escape.default_argument.novasheets }
-      '5': { name: comment.inline.novasheets }
-      '6': { name: constant.character.novasheets }
-
-  objects:
-    patterns:
-
-      # Declaration substitution
-      - match: "(\\$<)([\\s\\w.:~+>()]+)(>)"
-        #example: $<.selector>
-        captures:
-          '1': { name: constant.character.novasheets }
-          '2': { name: entity.other.attribute-name.class.css }
-          '3': { name: constant.character.novasheets }
-
-      # Object getter
-      - match: "(?<=>|})\\s*(\\<)(\\w+?)(\\>)"
-        #example: <font-size>
-        captures:
-          '1': { name: constant.character.novasheets }
-          '2': { name: support.type.property-name.css }
-          '3': { name: constant.character.novasheets }
-
-  parser_constant:
-    match: "(@option)(?:(\\s+[A-Z_]+)(\\s+(?:[0-9]+|true|false)))?"
-    #example: @option CONST_NAME true
-    captures:
-      '1': { name: keyword.variable.declarator.novasheets }
-      '2': { name: support.type.constant..parsernovasheets }
-      '3': { name: keyword.control.constant.parser.value.novasheets }
-
-  simple_breakpoint:
-    match: "(@(?!\\w))|\\.{2,}"
-    captures:
-      '1': { name: keyword.control.at-rule }
-      '2': { name: constant.character.novasheets }
-
-  loop_identifier:
-    match: "\\$i|\\$v\\[?|(?<=\\$v\\[[^\\]]*?)\\]"
-    name: keyword.variable.identifier.loop.novasheets
-
-  comments:
-    patterns:
-
-      # Inline
-      - match: "(?<![a-z]+:)//.*$"
-        name: comment.inline.novasheets
-
-      # Static
-      - match: "(/\\*/)(.*?)(/\\*/)"
-        captures:
-          '1': { name: comment.static.novasheets }
-          '2': { name: markup.italic.content.novasheets }
-          '3': { name: comment.static.novasheets }
-
-      # Parsed
-      - match: "(/\\*\\[|\\]\\*/)"
-        name: comment.block.css
-
-      # Block
-      - match: "/\\*.*?\\*/"
-        name: comment.block.css
+      - include: '#declarations'
+      - include: '#substitutions'
+      - include: '#objects'
+      - include: '#comments'
+      - include: '#loop-identifier'
 
   css:
     patterns:
+      - include: '#selectors'
+      - include: '#at-rules'
+      - include: '#functions'
+      - include: '#block'
 
-      # URL
-      - match: "[a-z]+://\\w+(\\.\\w+)+(/[^\\s)]+)?"
-        name: string.unquoted markup.underline.link
-  
-      # Selector
-      - match: "(?<!@[^$@{}]*)([^$@{}]+)(?=\\{|@[^{]+\\{)"
-        name: entity.other.attribute-name.class.css
-
-      # Function
-      - match: "(?<!@)[\\w-]+(?=\\s*\\()"
-        name: support.function.css
-
-      # At-rule
-      - match: "(?<!\\()@[\\w-]+"
-        name: keyword.control.at-rule
-      
-      # Property
-      - match: "([a-z-]+?(?!\\\\))\\s*:(?!//)"
-        captures:
-          '1': { name: support.type.property-name.css }
-
-      # !important
-      - match: "!\\s*important"
-        name: string.regexp.important.css
-
-  other:
+  declarations:
     patterns:
+      # Variable declaration
+      - name: meta.function.novasheets
+        begin: '(@var)\s+([^=|]+)'
+        beginCaptures:
+          1: { name: keyword.control.declaration.function.novasheets }
+          2: { name: variable.other.constant.novasheets }
+        end: '=|$'
+        endCaptures:
+          0: { name: constant.character.variable.declaration.end.novasheets }
+        patterns:
+          - name: meta.function.parameters.novasheets
+            match: '(\|)([^=|]+)'
+            captures:
+              1: { name: constant.character.parameter.begin.novasheets }
+              2: { name: variable.parameter.novasheets }
 
-      # @bitwise keywords
-      - match: "(?<=\\$\\(\\s*@(?:bitwise|boolean|if)[^)]+)(&|\\||!|not|&|and|nand|or|nor|xor|xnor)"
-        name: support.function.bitwise.novasheets
+      # Variable ending
+      - name: keyword.control.variable.ending.novasheets
+        match: '@endvar'
 
-      # Bracket matching
-      - match: "(?<!\\$)\\([^)]*?\\)"
-        name: meta.brackets.novasheets
+      # Parser constant
+      - name: meta.preprocessor.novasheets
+        match: '(@option)\s+([A-Z_]+)\s+(?=\d+|true|false)'
+        captures:
+          1: { name: keyword.control.declaration.option.novasheets }
+          2: { name: variable.parameter.option.novasheets }
 
-      # String
-      - match: "'[^']*?[^\\\\]'|\"[^\"]*?[^\\\\]\"|\"\"|''"
-        name: string.quoted.novasheets
+  substitutions:
+    patterns:
+      # Variables
+      - name: meta.function-call.novasheets
+        begin: '(\$\()\s*(?:(@[^=|)]+)|([^=|)]+))'
+        beginCaptures:
+          1: { name: constant.character.variable.begin.novasheets }
+          2: { name: support.type.function.builtin.novasheets }
+          3: { name: variable.other.constant.novasheets }
+        end: '\)'
+        endCaptures:
+          0: { name: constant.character.variable.end.novasheets }
+        patterns:
+          - name: meta.function-call.parameter.novasheets
+            match: '(\|)\s*([^=|]+)\s*(=)'
+            captures:
+              1: { name: constant.character.separator.parameter.novasheets }
+              2: { name: variable.parameter.novasheets }
+              3: { name: constant.character.accessor.parameter.novasheets }
+            patterns:
+              - name: variable.parameter.novasheets
+                match: '[^=|]+'
+          - include: '#novasheets'
+          - include: '#css'
+          - include: '#chars'
+          - name: string.regexp.novasheets
+            begin: '(?<!\\)/'
+            end: '(?<!\\)/[gimusy]?(?=\s|\b)'
 
-      # Boolean
-      - match: "\\b(true|false)\\b"
-        name: keyword.constant.logic.novasheets
+      # Parameters
+      - name: meta.block.parameter.novasheets
+        begin: '\$\['
+        beginCaptures:
+          0: { name: constant.character.parameter.begin.novasheets }
+        end: '\]'
+        endCaptures:
+          0: { name: constant.character.parameter.end.novasheets }
+        patterns:
+          - name: variable.parameter.novasheets
+            begin: '(?<=\[)'
+            end: '(?=\]|(\|))'
+            endCaptures:
+              0: { name: punctuation.separator.parameter.novasheets }
 
-      # Hex color
-      - match: "#[0-9a-fA-F]{8}(?![0-9a-fA-F])|#[0-9a-fA-F]{6}(?![0-9a-fA-F])|#[0-9a-fA-F]{3,4}(?![0-9a-fA-F])"
-        name: string.unquoted.color.hash.css
-      - match: "#[0-9a-fA-F]{9,}|#[0-9a-fA-F]{7}|#[0-9a-fA-F]{5}|#[0-9a-fA-F]{1,2}"
-        name: invalid.color.hash.css
+  objects:
+    patterns:
+      # Block substitutions
+      - name: meta.block.substitution.novasheets
+        begin: '\$<'
+        beginCaptures:
+          0: { name: constant.character.substitution.begin.novasheets }
+        end: '>'
+        endCaptures:
+          0: { name: constant.character.substitution.end.novasheets }
+        patterns:
+          - name: entity.name.tag.css.substitution.novasheets
+            match: '[^>]+'
 
-      # Unit
-      - match: "(?<=\\d\\s*)(em|rem|en|ex|px|pt|pc|cm|mm|m|ft|in|%)\\b"
-        name: constant.numeric.unit.css
+      # Attribute retrieval
+      - name: meta.block.attribute.novasheets
+        begin: '<'
+        beginCaptures:
+          0: { name: constant.character.substitution.begin.novasheets }
+        end: '>'
+        endCaptures:
+          0: { name: constant.character.substitution.end.novasheets }
+        patterns:
+          - name: entity.other.attribute-name.novasheets
+            match: '[^>]+'
 
-      # Number
-      - match: "\\d+e-?\\d+"
-        name: constant.numeric.css
-      - match: "0x[0-9a-f]*\\.?[0-9a-f]+|0b[01]*\\.?[01]+|0o[0-7]*\\.?[0-7]+|[0-9]*\\.?[0-9]+"
-        name: constant.numeric.css
+  loop-identifier:
+    patterns:
+      - name: constant.character.identifier.loop.novasheets
+        begin: '\$v(\[)'
+        beginCaptures:
+          0: { name: punctuation.definition.identifier.begin.novasheets }
+        end: '\]'
+        endCaptures:
+          0: { name: punctuation.definition.identifier.end.novasheets }
+      - name: constant.character.identifier.loop.novasheets
+        match: '\$i|\$v'
 
-      # Character
-      - match: "[-:;,.+~^*/!%(){}\\w]"
-        name: entity.constant.character
+  comments:
+    patterns:
+      # Inline comment
+      - name: comment.line.double-slash.novasheets
+        begin: '(?<![a-z]:)//'
+        end: '$'
+
+      # Block comment
+      - name: comment.block.css
+        begin: '/\*(?![\[/])'
+        end: '(?<![/\]])\*/'
+
+      # Static comment
+      - name: meta.block.comment.static.novasheets
+        begin: '/\*/'
+        beginCaptures:
+          0: { name: comment.block.parser.novasheets }
+        end: '/\*/'
+        endCaptures:
+          0: { name: comment.block.parser.novasheets }
+
+      # Parsed comment
+      - name: comment.block.parser.novasheets
+        match: '/\*\[|\]\*/'
+
+  selectors:
+    patterns:
+      - name: meta.selector.novasheets
+        begin: '(?<!@[^$@{}])^(?=\s*[A-Za-z&%,.#:+~>\[\]])(?![^}]*$)'
+        end: '(?=\{)'
+        patterns:
+          # Element
+          - name: entity.name.tag.css.selector.element.css
+            match: '(?<=\s|^|,)[A-Za-z]+[0-9]?(?=\s|[\[,.#:+~>])'
+          # Class
+          - name: entity.name.tag.css.selector.class.css
+            match: '(\.)(?>\\\s|[^\s,.#:+~>\[\]])+'
+            captures:
+              1: { name: punctuation.accessor.selector.class.css }
+          # ID
+          - name: entity.name.tag.css.selector.id.css
+            match: '(#)[^\s,.#:+~>\[\]]+'
+            captures:
+              1: { name: punctuation.accessor.selector.id.css }
+          # Pseudo-element/class
+          - name: entity.name.tag.css.selector.pseudo.css
+            match: '(::?)[^\s,.#:+~>\[\]]+'
+            captures:
+              1: { name: punctuation.accessor.selector.pseudo.css }
+          # Attributes
+          - name: entity.name.tag.css.selector.attribute.css
+            begin: '\['
+            beginCaptures:
+              0: { name: punctuation.accessor.selector.attribute.begin.css }
+            end: '\]'
+            endCaptures:
+              0: { name: punctuation.accessor.selector.attribute.end.css }
+          # Function
+          - name: entity.name.tag.css.selector.function.css
+            begin: '\('
+            beginCaptures:
+              0: { name: punctuation.accessor.selector.function.begin.css }
+            end: '\)'
+            endCaptures:
+              0: { name: punctuation.accessor.selector.function.end.css }
+          # Sliced parts
+          - name: entity.name.tag.css.selector.sliced.css
+            match: '(?<=&|%)\S+'
+          # Wildcard
+          - name: constant.character.wildcard.css
+            match: '\*'
+          # Comma
+          - name: punctuation.separator.selector.css
+            match: ','
+          # Breakpoint
+          - name: keyword.control.breakpoint.novasheets
+            match: '@|\.{2,}'
+          # Parent selector
+          - name: constant.character.selector.parent.novasheets
+            match: '&'
+          # Previous selector
+          - name: constant.character.selector.previous.novasheets
+            match: '%'
+          # Other
+          - include: '#novasheets'
+          - include: '#chars'
+
+  block:
+    name: meta.block.css
+    begin: '{'
+    beginCaptures:
+      0: { name: punctuation.definition.block.begin.css }
+    end: '}'
+    endCaptures:
+      0: { name: punctuation.definition.block.end.css }
+    patterns:
+      # Attribute
+      - name: meta.language.attribute.name.css
+        match: '(?<=[;{])\s*([\w-]+)\s*(:)'
+        captures:
+          1: { name: entity.other.attribute-name.css }
+          2: { name: punctuation.terminator.attribute.name.end.css }
+      # Value
+      - name: meta.language.attribute.value.css
+        begin: '(?<=[{:;])'
+        end: ';|(?=})'
+        endCaptures:
+          0: { name: punctuation.terminator.attribute.value.end.css }
+        patterns:
+          - include: '#novasheets'
+          - include: '#functions'
+          - include: '#chars'
+
+  at-rules:
+    patterns:
+      - name: keyword.control.function.at-rule.css
+        match: '@[\w-]+'
+
+  functions:
+    patterns:
+      - name: meta.function-call.css
+        begin: '([\w-]+)(?=(\())'
+        beginCaptures:
+          1: { name: entity.name.function.css }
+          2: { name: punctuation.definition.function.end.css }
+        end: '\)'
+        endCaptures:
+          0: { name: punctuation.definition.function.end.css }
+        patterns:
+          - include: '#novasheets'
+          - include: '#chars'
+
+  chars:
+    patterns:
+      # Strings
+      - name: string.quoted.double.css
+        begin: '(?<!\\)"'
+        beginCaptures:
+          0: { name: punctuation.definition.string.begin.css }
+        end: '(?<!\\)"'
+        endCaptures:
+          0: { name: punctuation.definition.string.end.css }
+      - name: string.quoted.single.css
+        begin: '(?<!\\)'''
+        beginCaptures:
+          0: { name: punctuation.definition.string.begin.css }
+        end: '(?<!\\)'''
+        endCaptures:
+          0: { name: punctuation.definition.string.end.css }
+
+      # Numbers
+      - name: constant.numeric.css
+        match: '[+-]?[0-9]+(?:\.[0-9]+)?'
+
+      # Units
+      - name: constant.numeric.unit.css
+        match: '(?<=[\d.])(%|em|rem|en|ex|vw|vh|px|pt|pc|cm|mm|m|ft|in|s|ms|deg)(?!\w)'
+
+      # Important
+      - name: storage.modifier.important.css
+        match: '!\s*important'
+
+      # Math operations
+      - name: keyword.operator.math.novasheets
+        match: '(?<=[.\d])\s*[-+*/^e](?=\s*[-.\d])'
+
+      # Boolean operations
+      - name: keyword.operator.boolean.novasheets
+        match: '!|[|][|]|&&|\bn?and\b|\bx?n?or\b'
+      - name: constant.language.boolean.novasheets
+        match: 'true|false'
+
+      # Colors
+      - name: string.other.color.css
+        match: '#[A-Fa-f0-9]{3,8}'

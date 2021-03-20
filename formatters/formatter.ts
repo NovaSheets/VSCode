@@ -1,6 +1,6 @@
-var vscode = require("vscode")
+import * as vscode from 'vscode';
 
-function activate(context) {
+export function activate(context: vscode.ExtensionContext) {
     console.log('NovaSheets formatter activated')
     const formatter = vscode.languages.registerDocumentFormattingEditProvider('novasheets', {
         provideDocumentFormattingEdits: function (document) {
@@ -22,12 +22,14 @@ function activate(context) {
                 .replace(/@const\s+([A-Z]+)\s+(true|false|\d+)/g, '@const $1 $2')
 
                 // CSS
-                .replace(/(?<=[{(][^})]*)([a-z-]+)\s*:(?!\/\/) */g, '$1: ')
+                .replace(/ *{/g, ' {')
+                .replace(/(?<=[{(][^}]*)([a-z-]+)\s*:(?!\/\/) */g, '$1: ')
+                .replace(/; *(?!})/g, '; ')
                 .replace(/\s*;/g, ';')
                 .replace(/!\s*important/g, '!important')
 
                 // General cleanup
-                .replace(/ +(?=\n)/g, '')
+                .replace(/ +$/gm, '')
 
             const startOfDocument = document.lineAt(0).range.start
             const endOfDocument = document.lineAt(document.lineCount - 1).range.end
@@ -37,6 +39,3 @@ function activate(context) {
     });
     context.subscriptions.push(formatter)
 }
-
-exports.__esModule = true
-exports.activate = activate

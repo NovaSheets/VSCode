@@ -15,3 +15,6 @@ This extension is available in the [VSCode Marketplace](https://marketplace.visu
 # Usage
 Just load a NovaSheets file with a `.nvss` file extension in VSCode and NovaSheets syntax highlighting should occur.
 Format the file using the default formatting command (`Alt+Shift+F` by default).
+
+## Snippets
+- `brkp`: Create a breakpoint using built-in function `$(@breakpoint)`.

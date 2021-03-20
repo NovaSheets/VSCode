@@ -1,5 +1,9 @@
 .vscode/
 .git/
+test/
 node_modules/
+
 .gitignore
 *.local.*
+*.js
+*.yaml

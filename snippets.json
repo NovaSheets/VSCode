@@ -1,0 +1,13 @@
+{
+    "Create breakpoint": {
+        "prefix": "brkp",
+        "body": [
+            "$(@breakpoint | ${1:1000px} |",
+            "$2",
+            "|",
+            "$3",
+            ")"
+        ],
+        "description": "Create breakpoint"
+    }
+}
