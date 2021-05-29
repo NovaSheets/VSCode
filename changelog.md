@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1
+- Fixed newlines breaking attribute syntax highlighting (#1).
+- Fixed selectors not having syntax highlighting applied when not at the start of a line.
+- Fixed empty parameters having superfluous spaces added when formatted (#2).
+- Fixed pseudo-classes after parenthetical selectors having invalid spaces added (#2).
+
 ## 1.4.0
 - Added breakpoint snippet.
 - Added previous element selector syntax highlighting.

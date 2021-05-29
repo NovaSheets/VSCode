@@ -15,6 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
                 .replace(/(?<=(?:\$\(|\))[^()]+) *\)/g, ' )')
                 .replace(/\$\(\s+([^$()|]+)\s+\)/g, '$($1)')
                 .replace(/ *\| */g, ' | ')
+                .replace(/  \|/g, ' |')
                 .replace(/(?<=\|)(.*?) *=\s*/g, '$1 = ')
                 .replace(/^ ([|)])/gm, '$1')
 
@@ -23,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 // CSS
                 .replace(/ *{/g, ' {')
-                .replace(/(?<=[{(][^}]*)([a-z-]+)\s*:(?!\/\/) */g, '$1: ')
+                .replace(/(?<=[{(][^})]*)([a-z-]+)\s*:(?!\/\/) +/g, '$1: ')
                 .replace(/; *(?!})/g, '; ')
                 .replace(/\s*;/g, ';')
                 .replace(/!\s*important/g, '!important')

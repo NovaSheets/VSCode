@@ -20,9 +20,9 @@ repository:
   css:
     patterns:
       - include: '#selectors'
+      - include: '#attributes'
       - include: '#at-rules'
       - include: '#functions'
-      - include: '#block'
 
   declarations:
     patterns:
@@ -48,7 +48,7 @@ repository:
 
       # Parser constant
       - name: meta.preprocessor.novasheets
-        match: '(@option)\s+([A-Z_]+)\s+(?=\d+|true|false)'
+        match: '(@option)\s+([A-Z_]+)\s+'
         captures:
           1: { name: keyword.control.declaration.option.novasheets }
           2: { name: variable.parameter.option.novasheets }
@@ -163,12 +163,12 @@ repository:
   selectors:
     patterns:
       - name: meta.selector.novasheets
-        begin: '(?<!@[^$@{}])^(?=\s*[A-Za-z&%,.#:+~>\[\]])(?![^}]*$)'
+        begin: '(?<!@[^$@{}])(?=\s*[A-Za-z&%,.#:+~>\[\]])(?=.*{)'
         end: '(?=\{)'
         patterns:
           # Element
           - name: entity.name.tag.css.selector.element.css
-            match: '(?<=\s|^|,)[A-Za-z]+[0-9]?(?=\s|[\[,.#:+~>])'
+            match: '\w+(?=[\s{\[,.#:+~>])'
           # Class
           - name: entity.name.tag.css.selector.class.css
             match: '(\.)(?>\\\s|[^\s,.#:+~>\[\]])+'
@@ -222,31 +222,12 @@ repository:
           - include: '#novasheets'
           - include: '#chars'
 
-  block:
-    name: meta.block.css
-    begin: '{'
-    beginCaptures:
-      0: { name: punctuation.definition.block.begin.css }
-    end: '}'
-    endCaptures:
-      0: { name: punctuation.definition.block.end.css }
+  attributes:
     patterns:
-      # Attribute
-      - name: meta.language.attribute.name.css
-        match: '(?<=[;{])\s*([\w-]+)\s*(:)'
+      - name: entity.other.attribute-name.css
+        match: '([\w-]+)(:)'
         captures:
-          1: { name: entity.other.attribute-name.css }
           2: { name: punctuation.terminator.attribute.name.end.css }
-      # Value
-      - name: meta.language.attribute.value.css
-        begin: '(?<=[{:;])'
-        end: ';|(?=})'
-        endCaptures:
-          0: { name: punctuation.terminator.attribute.value.end.css }
-        patterns:
-          - include: '#novasheets'
-          - include: '#functions'
-          - include: '#chars'
 
   at-rules:
     patterns:
