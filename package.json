@@ -4,7 +4,7 @@
     "description": "Syntax highlighter and formatter for NovaSheets files",
     "publisher": "Nixinova",
     "repository": "NovaSheets-vscode",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "license": "ISC",
     "scripts": {
         "vscode:prepublish": "npm run compile",

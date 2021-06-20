@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.2
+- Removed previous element selector syntax highlighting.
+- Fixed newlines breaking selector syntax highlighting (#3).
+- Fixed simple breakpoint highlighting not being applied when missing a preceeding selector part.
+- Fixed regular expression syntax higlighting not being applied when more than one flag is specified.
+- Fixed delimiters in anonymous arguments not having syntax highlighting applied.
+- Fixed indented pipes and closing parentheses having their indentation removed on format.
+
 ## 1.4.1
 - Fixed newlines breaking attribute syntax highlighting (#1).
 - Fixed selectors not having syntax highlighting applied when not at the start of a line.

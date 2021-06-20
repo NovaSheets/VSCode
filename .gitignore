@@ -1,7 +1,11 @@
+# Packages
 node_modules/
-test/
 
+# Compiled output
+formatters/*.js
+formatters/*.d.ts
+syntaxes/*.json
+*.vsix
+
+# Local files
 *.local.*
-*.js
-*.d.ts
-*.json

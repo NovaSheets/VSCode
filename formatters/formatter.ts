@@ -12,12 +12,9 @@ export function activate(context: vscode.ExtensionContext) {
 
                 // Variable substitutions
                 .replace(/\$\( */g, '$( ')
-                .replace(/(?<=(?:\$\(|\))[^()]+) *\)/g, ' )')
+                .replace(/(?<!^)(?<=^|(?:\$\(|\))[^()]+) *\)/gm, ' )')
                 .replace(/\$\(\s+([^$()|]+)\s+\)/g, '$($1)')
-                .replace(/ *\| */g, ' | ')
-                .replace(/  \|/g, ' |')
                 .replace(/(?<=\|)(.*?) *=\s*/g, '$1 = ')
-                .replace(/^ ([|)])/gm, '$1')
 
                 // Parser constants
                 .replace(/@const\s+([A-Z]+)\s+(true|false|\d+)/g, '@const $1 $2')

@@ -66,21 +66,20 @@ repository:
         endCaptures:
           0: { name: constant.character.variable.end.novasheets }
         patterns:
-          - name: meta.function-call.parameter.novasheets
-            match: '(\|)\s*([^=|]+)\s*(=)'
-            captures:
-              1: { name: constant.character.separator.parameter.novasheets }
-              2: { name: variable.parameter.novasheets }
-              3: { name: constant.character.accessor.parameter.novasheets }
-            patterns:
-              - name: variable.parameter.novasheets
-                match: '[^=|]+'
           - include: '#novasheets'
           - include: '#css'
           - include: '#chars'
-          - name: string.regexp.novasheets
-            begin: '(?<!\\)/'
-            end: '(?<!\\)/[gimusy]?(?=\s|\b)'
+
+      # Arguments
+      - name: meta.function-call.parameter.novasheets
+        match: '(\|)(?:\s*([^=|]+)\s*(=))?'
+        captures:
+          1: { name: constant.character.separator.parameter.novasheets }
+          2: { name: variable.parameter.novasheets }
+          3: { name: constant.character.accessor.parameter.novasheets }
+        patterns:
+          - name: variable.parameter.novasheets
+            match: '[^=|]+'
 
       # Parameters
       - name: meta.block.parameter.novasheets
@@ -163,12 +162,13 @@ repository:
   selectors:
     patterns:
       - name: meta.selector.novasheets
-        begin: '(?<!@[^$@{}])(?=\s*[A-Za-z&%,.#:+~>\[\]])(?=.*{)'
+        # begin: '(?<!@[^$@{}])(?=[\w&,.#:+~>\[\]])(?={)'
+        begin: '^'
         end: '(?=\{)'
         patterns:
           # Element
           - name: entity.name.tag.css.selector.element.css
-            match: '\w+(?=[\s{\[,.#:+~>])'
+            match: '\w+(?=[\s{\[,.#:+~>])(?=.+{)'
           # Class
           - name: entity.name.tag.css.selector.class.css
             match: '(\.)(?>\\\s|[^\s,.#:+~>\[\]])+'
@@ -200,39 +200,36 @@ repository:
             end: '\)'
             endCaptures:
               0: { name: punctuation.accessor.selector.function.end.css }
-          # Sliced parts
-          - name: entity.name.tag.css.selector.sliced.css
-            match: '(?<=&|%)\S+'
           # Wildcard
           - name: constant.character.wildcard.css
             match: '\*'
           # Comma
           - name: punctuation.separator.selector.css
             match: ','
+          # At-rule
+          - include: '#at-rules'
           # Breakpoint
           - name: keyword.control.breakpoint.novasheets
-            match: '@|\.{2,}'
+            match: '@(?!a-z)|\.{2,}'
           # Parent selector
           - name: constant.character.selector.parent.novasheets
             match: '&'
-          # Previous selector
-          - name: constant.character.selector.previous.novasheets
-            match: '%'
           # Other
           - include: '#novasheets'
+          - include: '#attributes'
           - include: '#chars'
 
   attributes:
     patterns:
       - name: entity.other.attribute-name.css
-        match: '([\w-]+)(:)'
+        match: '([a-z-]+)(:)'
         captures:
           2: { name: punctuation.terminator.attribute.name.end.css }
 
   at-rules:
     patterns:
       - name: keyword.control.function.at-rule.css
-        match: '@[\w-]+'
+        match: '@[a-z-]+'
 
   functions:
     patterns:
@@ -269,6 +266,10 @@ repository:
       # Numbers
       - name: constant.numeric.css
         match: '[+-]?[0-9]+(?:\.[0-9]+)?'
+
+      # Regexes
+      - name: string.regexp.novasheets
+        match: '(?<!\\)/.+(?<!\\)/[gimusy]*(?=\s|\b)'
 
       # Units
       - name: constant.numeric.unit.css
