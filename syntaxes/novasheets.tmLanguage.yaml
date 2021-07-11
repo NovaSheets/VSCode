@@ -1,5 +1,5 @@
 name: NovaSheets
-scopeName: source.novasheets
+scopeName: source.css.novasheets
 fileTypes:
   - '.nvss'
 
@@ -84,11 +84,9 @@ repository:
       # Parameters
       - name: meta.block.parameter.novasheets
         begin: '\$\['
-        beginCaptures:
-          0: { name: constant.character.parameter.begin.novasheets }
         end: '\]'
-        endCaptures:
-          0: { name: constant.character.parameter.end.novasheets }
+        captures:
+          0: { name: constant.character.parameter.novasheets }
         patterns:
           - name: variable.parameter.novasheets
             begin: '(?<=\[)'
@@ -101,11 +99,9 @@ repository:
       # Block substitutions
       - name: meta.block.substitution.novasheets
         begin: '\$<'
-        beginCaptures:
-          0: { name: constant.character.substitution.begin.novasheets }
         end: '>'
-        endCaptures:
-          0: { name: constant.character.substitution.end.novasheets }
+        captures:
+          0: { name: constant.character.substitution.novasheets }
         patterns:
           - name: entity.name.tag.css.substitution.novasheets
             match: '[^>]+'
@@ -113,11 +109,9 @@ repository:
       # Attribute retrieval
       - name: meta.block.attribute.novasheets
         begin: '<'
-        beginCaptures:
-          0: { name: constant.character.substitution.begin.novasheets }
         end: '>'
-        endCaptures:
-          0: { name: constant.character.substitution.end.novasheets }
+        captures:
+          0: { name: constant.character.substitution.novasheets }
         patterns:
           - name: entity.other.attribute-name.novasheets
             match: '[^>]+'
@@ -126,11 +120,9 @@ repository:
     patterns:
       - name: constant.character.identifier.loop.novasheets
         begin: '\$v(\[)'
-        beginCaptures:
-          0: { name: punctuation.definition.identifier.begin.novasheets }
         end: '\]'
-        endCaptures:
-          0: { name: punctuation.definition.identifier.end.novasheets }
+        captures:
+          0: { name: punctuation.definition.identifier.novasheets }
       - name: constant.character.identifier.loop.novasheets
         match: '\$i|\$v'
 
@@ -145,14 +137,14 @@ repository:
       - name: comment.block.css
         begin: '/\*(?![\[/])'
         end: '(?<![/\]])\*/'
+        captures:
+          0: { name: comment.block.novasheets }
 
       # Static comment
-      - name: meta.block.comment.static.novasheets
+      - contentName: meta.block.comment.static.novasheets
         begin: '/\*/'
-        beginCaptures:
-          0: { name: comment.block.parser.novasheets }
         end: '/\*/'
-        endCaptures:
+        captures:
           0: { name: comment.block.parser.novasheets }
 
       # Parsed comment
@@ -162,44 +154,48 @@ repository:
   selectors:
     patterns:
       - name: meta.selector.novasheets
-        # begin: '(?<!@[^$@{}])(?=[\w&,.#:+~>\[\]])(?={)'
         begin: '^'
         end: '(?=\{)'
         patterns:
+          # Escapes
+          - include: '#escapes'
           # Element
           - name: entity.name.tag.css.selector.element.css
-            match: '\w+(?=[\s{\[,.#:+~>])(?=.+{)'
+            match: '(?x)
+              \b
+              (a|abbr|address|area|article|aside|audio|b|base|bdi|bdo|blockquote|body|br|button|canvas|caption|cite|code|col|colgroup|data|datalist|dd|del|details|dfn|dialog|div|dl|dt|em|embed|fieldset|figure|footer|form|h1|h2|h3|h4|h5|h6|head|header|hgroup|hr|html|i|iframe|img|input|ins|kbd|keygen|label|legend|li|link|main|map|mark|menu|menuitem|meta|meter|nav|noscript|object|ol|optgroup|option|output|p|param|pre|progress|q|rb|rp|rt|rtc|ruby|s|samp|script|section|select|small|source|span|strong|style|sub|summary|sup|table|tbody|td|template|textarea|tfoot|th|thead|time|title|tr|track|u|ul|var|video|wbr)
+              \b
+            '
           # Class
           - name: entity.name.tag.css.selector.class.css
-            match: '(\.)(?>\\\s|[^\s,.#:+~>\[\]])+'
-            captures:
-              1: { name: punctuation.accessor.selector.class.css }
+            begin: '\.'
+            end: '(?=[\s\[,.\#:+~>])'
+            beginCaptures:
+              0: { name: punctuation.accessor.selector.class.css }
           # ID
           - name: entity.name.tag.css.selector.id.css
-            match: '(#)[^\s,.#:+~>\[\]]+'
-            captures:
-              1: { name: punctuation.accessor.selector.id.css }
+            begin: '#'
+            end: '(?=[\s\[,.\#:+~>])'
+            beginCaptures:
+              0: { name: punctuation.accessor.selector.id.css }
           # Pseudo-element/class
           - name: entity.name.tag.css.selector.pseudo.css
-            match: '(::?)[^\s,.#:+~>\[\]]+'
-            captures:
-              1: { name: punctuation.accessor.selector.pseudo.css }
+            begin: '::?'
+            end: '(?=[\s\[,.\#:+~>])'
+            beginCaptures:
+              0: { name: punctuation.accessor.selector.pseudo.css }
           # Attributes
           - name: entity.name.tag.css.selector.attribute.css
             begin: '\['
-            beginCaptures:
-              0: { name: punctuation.accessor.selector.attribute.begin.css }
             end: '\]'
-            endCaptures:
-              0: { name: punctuation.accessor.selector.attribute.end.css }
+            captures:
+              0: { name: punctuation.accessor.selector.attribute.css }
           # Function
           - name: entity.name.tag.css.selector.function.css
             begin: '\('
-            beginCaptures:
-              0: { name: punctuation.accessor.selector.function.begin.css }
             end: '\)'
-            endCaptures:
-              0: { name: punctuation.accessor.selector.function.end.css }
+            captures:
+              0: { name: punctuation.accessor.selector.function.css }
           # Wildcard
           - name: constant.character.wildcard.css
             match: '\*'
@@ -212,8 +208,11 @@ repository:
           - name: keyword.control.breakpoint.novasheets
             match: '@(?!a-z)|\.{2,}'
           # Parent selector
-          - name: constant.character.selector.parent.novasheets
-            match: '&'
+          - name: meta.selector.parent.novasheets
+            match: '(&)([\w-]+)?'
+            captures:
+              1: { name: constant.character.selector.parent.novasheets}
+              2: { name: entity.name.tag.css.selector.fragmented.css}
           # Other
           - include: '#novasheets'
           - include: '#attributes'
@@ -248,20 +247,13 @@ repository:
   chars:
     patterns:
       # Strings
-      - name: string.quoted.double.css
-        begin: '(?<!\\)"'
-        beginCaptures:
-          0: { name: punctuation.definition.string.begin.css }
-        end: '(?<!\\)"'
-        endCaptures:
-          0: { name: punctuation.definition.string.end.css }
-      - name: string.quoted.single.css
-        begin: '(?<!\\)'''
-        beginCaptures:
-          0: { name: punctuation.definition.string.begin.css }
-        end: '(?<!\\)'''
-        endCaptures:
-          0: { name: punctuation.definition.string.end.css }
+      - name: string.quoted.css
+        begin: '(?<!\\)("|'')'
+        end: '(?<!\\)\1'
+        captures:
+          0: { name: punctuation.definition.string.css }
+        patterns:
+        - include: '#escapes'
 
       # Numbers
       - name: constant.numeric.css
@@ -269,7 +261,15 @@ repository:
 
       # Regexes
       - name: string.regexp.novasheets
-        match: '(?<!\\)/.+(?<!\\)/[gimusy]*(?=\s|\b)'
+        match: '(?x)
+          (?<!\\) # Skip escaped slashes
+          /
+          .+
+          (?<!\\) # Skip escaped slashes
+          /
+          [gimusy]* # Regex flag
+          (?=\s|\b)
+        '
 
       # Units
       - name: constant.numeric.unit.css
@@ -281,7 +281,11 @@ repository:
 
       # Math operations
       - name: keyword.operator.math.novasheets
-        match: '(?<=[.\d])\s*[-+*/^e](?=\s*[-.\d])'
+        match: '(?x)
+          (?<=[.\d]) # Preceeded by number
+          \s*[-+*/^e]\s* # Math operation
+          (?=[-.\d]) # Followed by number
+        '
 
       # Boolean operations
       - name: keyword.operator.boolean.novasheets
@@ -292,3 +296,8 @@ repository:
       # Colors
       - name: string.other.color.css
         match: '#[A-Fa-f0-9]{3,8}'
+
+  escapes:
+    patterns:
+      - name: constant.character.escape.css
+        match: '\\([\da-f]+\s?|.)'

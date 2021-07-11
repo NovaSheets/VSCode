@@ -4,7 +4,7 @@
     "description": "Syntax highlighter and formatter for NovaSheets files",
     "publisher": "Nixinova",
     "repository": "NovaSheets-vscode",
-    "version": "1.4.2",
+    "version": "1.4.3",
     "license": "ISC",
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -12,7 +12,7 @@
         "tmlang": "yaml2json syntaxes/novasheets.tmLanguage.yaml --save"
     },
     "engines": {
-        "vscode": "^1.54.0"
+        "vscode": "^1.48.0"
     },
     "categories": [
         "Formatters",
@@ -41,7 +41,7 @@
         "grammars": [
             {
                 "language": "novasheets",
-                "scopeName": "source.novasheets",
+                "scopeName": "source.css.novasheets",
                 "path": "./syntaxes/novasheets.tmLanguage.json"
             }
         ],
@@ -53,8 +53,8 @@
         ]
     },
     "devDependencies": {
-        "@types/vscode": "^1.54.0",
-        "typescript": "~4.3.2",
+        "@types/vscode": "^1.48.0",
+        "typescript": "^4.3.5",
         "yamljs": "^0.3.0"
     }
 }

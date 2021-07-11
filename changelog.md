@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.3
+- Added escape sequence syntax highlighting.
+- Changed scope name from `source.novasheets` to `source.css.novasheets`.
+- Changed element syntax highlighting to only highlight valid elements
+- Fixed formatter not initialising.
+
 ## 1.4.2
 - Removed previous element selector syntax highlighting.
 - Fixed newlines breaking selector syntax highlighting (#3).
