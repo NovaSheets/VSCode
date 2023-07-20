@@ -1,5 +1,9 @@
 # Changelog
 
+## Next
+- Fixed syntax highlighting being erroneously applied over line breaks.
+- Fixed `@var` declarations not being highlighted when indented.
+
 ## 1.4.3
 - Added escape sequence syntax highlighting.
 - Changed scope name from `source.novasheets` to `source.css.novasheets`.

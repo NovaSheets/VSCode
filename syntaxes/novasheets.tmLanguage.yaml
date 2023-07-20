@@ -4,11 +4,15 @@ fileTypes:
   - '.nvss'
 
 patterns:
-  - include: '#novasheets'
-  - include: '#css'
-  - include: '#chars'
+  - include: '#all'
 
 repository:
+  all:
+    patterns:
+      - include: '#novasheets'
+      - include: '#css'
+      - include: '#chars'
+
   novasheets:
     patterns:
       - include: '#declarations'
@@ -28,7 +32,7 @@ repository:
     patterns:
       # Variable declaration
       - name: meta.function.novasheets
-        begin: '(@var)\s+([^=|]+)'
+        begin: '(@var)[ \t]+([^=|]+)'
         beginCaptures:
           1: { name: keyword.control.declaration.function.novasheets }
           2: { name: variable.other.constant.novasheets }
@@ -37,7 +41,7 @@ repository:
           0: { name: constant.character.variable.declaration.end.novasheets }
         patterns:
           - name: meta.function.parameters.novasheets
-            match: '(\|)([^=|]+)'
+            match: '(\|)[ \t]*([^=|]+)'
             captures:
               1: { name: constant.character.parameter.begin.novasheets }
               2: { name: variable.parameter.novasheets }
@@ -48,7 +52,7 @@ repository:
 
       # Parser constant
       - name: meta.preprocessor.novasheets
-        match: '(@option)\s+([A-Z_]+)\s+'
+        match: '(@option)[ \t]+([A-Z_]+)[ \t]'
         captures:
           1: { name: keyword.control.declaration.option.novasheets }
           2: { name: variable.parameter.option.novasheets }
@@ -66,9 +70,7 @@ repository:
         endCaptures:
           0: { name: constant.character.variable.end.novasheets }
         patterns:
-          - include: '#novasheets'
-          - include: '#css'
-          - include: '#chars'
+          - include: '#all'
 
       # Arguments
       - name: meta.function-call.parameter.novasheets
@@ -153,70 +155,62 @@ repository:
 
   selectors:
     patterns:
-      - name: meta.selector.novasheets
-        begin: '^'
-        end: '(?=\{)'
-        patterns:
-          # Escapes
-          - include: '#escapes'
-          # Element
-          - name: entity.name.tag.css.selector.element.css
-            match: '(?x)
-              \b
-              (a|abbr|address|area|article|aside|audio|b|base|bdi|bdo|blockquote|body|br|button|canvas|caption|cite|code|col|colgroup|data|datalist|dd|del|details|dfn|dialog|div|dl|dt|em|embed|fieldset|figure|footer|form|h1|h2|h3|h4|h5|h6|head|header|hgroup|hr|html|i|iframe|img|input|ins|kbd|keygen|label|legend|li|link|main|map|mark|menu|menuitem|meta|meter|nav|noscript|object|ol|optgroup|option|output|p|param|pre|progress|q|rb|rp|rt|rtc|ruby|s|samp|script|section|select|small|source|span|strong|style|sub|summary|sup|table|tbody|td|template|textarea|tfoot|th|thead|time|title|tr|track|u|ul|var|video|wbr)
-              \b
-            '
-          # Class
-          - name: entity.name.tag.css.selector.class.css
-            begin: '\.'
-            end: '(?=[\s\[,.\#:+~>])'
-            beginCaptures:
-              0: { name: punctuation.accessor.selector.class.css }
-          # ID
-          - name: entity.name.tag.css.selector.id.css
-            begin: '#'
-            end: '(?=[\s\[,.\#:+~>])'
-            beginCaptures:
-              0: { name: punctuation.accessor.selector.id.css }
-          # Pseudo-element/class
-          - name: entity.name.tag.css.selector.pseudo.css
-            begin: '::?'
-            end: '(?=[\s\[,.\#:+~>])'
-            beginCaptures:
-              0: { name: punctuation.accessor.selector.pseudo.css }
-          # Attributes
-          - name: entity.name.tag.css.selector.attribute.css
-            begin: '\['
-            end: '\]'
-            captures:
-              0: { name: punctuation.accessor.selector.attribute.css }
-          # Function
-          - name: entity.name.tag.css.selector.function.css
-            begin: '\('
-            end: '\)'
-            captures:
-              0: { name: punctuation.accessor.selector.function.css }
-          # Wildcard
-          - name: constant.character.wildcard.css
-            match: '\*'
-          # Comma
-          - name: punctuation.separator.selector.css
-            match: ','
-          # At-rule
-          - include: '#at-rules'
-          # Breakpoint
-          - name: keyword.control.breakpoint.novasheets
-            match: '@(?!a-z)|\.{2,}'
-          # Parent selector
-          - name: meta.selector.parent.novasheets
-            match: '(&)([\w-]+)?'
-            captures:
-              1: { name: constant.character.selector.parent.novasheets}
-              2: { name: entity.name.tag.css.selector.fragmented.css}
-          # Other
-          - include: '#novasheets'
-          - include: '#attributes'
-          - include: '#chars'
+      # Escapes
+      - include: '#escapes'
+      # Element
+      - name: entity.name.tag.css.selector.element.css
+        match: '(?x)
+          \b
+          (a|abbr|address|area|article|aside|audio|b|base|bdi|bdo|blockquote|body|br|button|canvas|caption|cite|code|col|colgroup|data|datalist|dd|del|details|dfn|dialog|div|dl|dt|em|embed|fieldset|figure|footer|form|h1|h2|h3|h4|h5|h6|head|header|hgroup|hr|html|i|iframe|img|input|ins|kbd|keygen|label|legend|li|link|main|map|mark|menu|menuitem|meta|meter|nav|noscript|object|ol|optgroup|option|output|p|param|pre|progress|q|rb|rp|rt|rtc|ruby|s|samp|script|section|select|small|source|span|strong|style|sub|summary|sup|table|tbody|td|template|textarea|tfoot|th|thead|time|title|tr|track|u|ul|var|video|wbr)
+          \b
+          '
+      # Class
+      - name: entity.name.tag.css.selector.class.css
+        begin: '\.'
+        end: '(?=[\s\[,.\#:+~>])'
+        beginCaptures:
+          0: { name: punctuation.accessor.selector.class.css }
+      # ID
+      - name: entity.name.tag.css.selector.id.css
+        begin: '#'
+        end: '(?=[\s\[,.\#:+~>])'
+        beginCaptures:
+          0: { name: punctuation.accessor.selector.id.css }
+      # Pseudo-element/class
+      - name: entity.name.tag.css.selector.pseudo.css
+        begin: '::?'
+        end: '(?=[\s\[,.\#:+~>])'
+        beginCaptures:
+          0: { name: punctuation.accessor.selector.pseudo.css }
+      # Attributes
+      - name: entity.name.tag.css.selector.attribute.css
+        begin: '\['
+        end: '\]'
+        captures:
+          0: { name: punctuation.accessor.selector.attribute.css }
+      # Function
+      - name: entity.name.tag.css.selector.function.css
+        begin: '\('
+        end: '\)'
+        captures:
+          0: { name: punctuation.accessor.selector.function.css }
+      # Wildcard
+      - name: constant.character.selector.wildcard.css
+        match: '\*'
+      # Comma
+      - name: punctuation.selector.comma.css
+        match: ','
+      # At-rule
+      - include: '#at-rules'
+      # Breakpoint
+      - name: keyword.control.breakpoint.novasheets
+        match: '@(?!a-z)|\.{2,}'
+      # Parent selector
+      - name: meta.selector.parent.novasheets
+        match: '(&)([\w-]+)?'
+        captures:
+          1: { name: constant.character.selector.parent.novasheets }
+          2: { name: entity.name.tag.css.selector.fragmented.css }
 
   attributes:
     patterns:
@@ -253,7 +247,7 @@ repository:
         captures:
           0: { name: punctuation.definition.string.css }
         patterns:
-        - include: '#escapes'
+          - include: '#escapes'
 
       # Numbers
       - name: constant.numeric.css
@@ -269,7 +263,7 @@ repository:
           /
           [gimusy]* # Regex flag
           (?=\s|\b)
-        '
+          '
 
       # Units
       - name: constant.numeric.unit.css
@@ -285,7 +279,7 @@ repository:
           (?<=[.\d]) # Preceeded by number
           \s*[-+*/^e]\s* # Math operation
           (?=[-.\d]) # Followed by number
-        '
+          '
 
       # Boolean operations
       - name: keyword.operator.boolean.novasheets

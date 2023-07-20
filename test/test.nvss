@@ -1,4 +1,6 @@
 // NovaSheets //
+@option DECIMAL_PLACES 4
+ @var x = 1
 @var base-font-size = 2em
 @var theme color = #7f5d4a
 @var url = url("https://example.com")
