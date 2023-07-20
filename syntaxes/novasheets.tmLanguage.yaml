@@ -40,11 +40,8 @@ repository:
         endCaptures:
           0: { name: constant.character.variable.declaration.end.novasheets }
         patterns:
-          - name: meta.function.parameters.novasheets
+          - name: comment.label.parameter.novasheets
             match: '(\|)[ \t]*([^=|]+)'
-            captures:
-              1: { name: constant.character.parameter.begin.novasheets }
-              2: { name: variable.parameter.novasheets }
 
       # Variable ending
       - name: keyword.control.variable.ending.novasheets

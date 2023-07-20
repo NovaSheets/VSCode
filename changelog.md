@@ -1,13 +1,13 @@
 # Changelog
 
 ## Next
-- Fixed syntax highlighting being erroneously applied over line breaks.
+- Changed tokenisation of parameters in variable declarations to comments.
 - Fixed `@var` declarations not being highlighted when indented.
 
 ## 1.4.3
 - Added escape sequence syntax highlighting.
 - Changed scope name from `source.novasheets` to `source.css.novasheets`.
-- Changed element syntax highlighting to only highlight valid elements
+- Changed element syntax highlighting to only highlight valid elements.
 - Fixed formatter not initialising.
 
 ## 1.4.2
