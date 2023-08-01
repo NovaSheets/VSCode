@@ -1,6 +1,6 @@
 # Changelog
 
-## Next
+## 1.4.4
 - Changed tokenisation of parameters in variable declarations to comments.
 - Changed numeric highlighting to include `e` notation.
 - Fixed `@var` declarations not being highlighted when indented.
